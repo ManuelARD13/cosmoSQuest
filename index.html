@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathfinders: Cosmo's Quest</title>
+    <link rel="stylesheet" href="cosmoSQuest.css">
+</head>
+<body>
+    <section id="startScreen">
+        <input type="button" class="continueButton" value="START DEMO APP TRIAL" id="startScreenButton">
+    </section>
+    <section id="branding">
+        <div>
+            <h3><span>Cosmic</span> Games</h3>
+            <input type="button" class="continueButton" value="Continue" id="brandingButton">
+        </div>
+    </section>
+    <section id="mainMenu">
+        <div id="mainMenuDiv">
+            <img src="img/pathfinderLogo.png" alt="pathfinderLogo">
+            <h1>Cosmo's Quest<h1>
+            <form id="mainMenuForm">
+                <input type="button" class="continueButton" value="New Game" id="buttonMainMenu">
+                <input type="button" value="Load Game" id="loadGame">
+            </form>
+        </div>
+    </section>
+    <section id="createCharacter1">
+        <div id="chooseRaze">
+            <p>Choose your raze<br>(You can check up to 2 options)</p>
+            <div id="characterDescription">
+                <p>
+                    An elf (pl: elves) is a type of humanoid supernatural being in Germanic mythology and folklore (especially North Germanic mythology and folklore). In medieval Germanic-speaking cultures, elves generally seem to have been thought of as beings with magical powers and supernatural beauty, ambivalent towards everyday people and capable of either helping or hindering them.[1] However, the details of these beliefs have varied considerably over time and space and have flourished in both pre-Christian and Christian cultures.
+                </p>
+            </div>
+            <div id="characterStats">
+                <ul>
+                    <li>CON</li>
+                    <li>CON</li>
+                    <li>CON</li>
+                </ul>
+            </div>
+            <form id="form">
+                <input type="checkbox" class="razes" value="human" id="human">
+                <label class="razesLabels" for="human" id="humanLabel"></label>
+                <input type="checkbox" class="razes" value="elf" id="elf">
+                <label class="razesLabels" for="elf" id="elfLabel"></label>
+                <input type="checkbox" class="razes" value="orc" id="orc">
+                <label class="razesLabels" for="orc" id="orcLabel"></label>
+                <input type="checkbox" class="razes" value="dwarf" id="dwarf">
+                <label class="razesLabels" for="dwarf" id="dwarfLabel"></label>
+                <input type="button" id="razesButton" value="Choose Raze">
+            </form>
+        </div>
+        <div>
+            <img src="img/noCharacter.png" alt="choose a Raze" id="characterImg">
+        </div>    
+        <div>
+            <input type="button" class="returnButton returnMainMenu" value="Return">
+            <input type="button" class="continueButton" value="Continue" id="continueCharacter1">
+        </div>
+    </section>
+    <section id="loadingGameScreen">
+        <div>
+            <p>Load Game</p>
+            <input type="button" class="returnButton returnMainMenu" value="Return">
+            <input type="button" class="continueButton" value="Continue" id="continueLoadGame">
+        </div>
+    </section>
+    <section id="createCharacter2">
+        <div>
+            <p>createCharacter2</p>
+            <input type="button" class="returnButton" value="Return" id="buttonCharacter2">
+            <input type="button" class="continueButton" value="Continue" id="continueCharacter2">
+        </div>
+    </section>
+    <section id="createCharacter3">
+        <div>
+            <p>createCharacter3</p>
+            <input type="button" class="returnButton" value="Return" id="buttonCharacter3">
+            <input type="button" class="continueButton" value="Continue" id="continueCharacter3">
+        </div>
+    </section>
+    <section id="characterProfile">
+        <div>
+            <p>characterProfile</p>
+            <input type="button" class="returnButton returnMainMenu" value="Return">
+            <input type="button" class="continueButton" value="Continue" id="continueProfile">
+        </div>
+    </section>
+    <section id="greetings">
+        <div>
+            <p>greetings</p>
+            <input type="button" class="returnButton returnMainMenu" value="Return">
+        </div>
+    </section>
+    
+    <script src="cosmoSQuest.js"></script>
+</body>
+</html>
