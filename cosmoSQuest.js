@@ -17,9 +17,8 @@ class Character {
     }
 
 class Razes {
-    constructor(razeName, razeImg, razeSkills, razeLore, razeMusicBK, razeBKImg, dualRaze=false) {
+    constructor(razeName, razeSkills, razeLore, razeMusicBK, razeBKImg, dualRaze=false) {
         this.razeName = razeName,
-        this.razeImg = razeImg,
         this.razeSkills = razeSkills,
         this.razeLore = razeLore,
         this.razeMusicBK = razeMusicBK,
@@ -28,10 +27,9 @@ class Razes {
     }
 }
 
-class characterClass {
-    constructor(className, classImg, classSkills, classLore, dualClass=false) {
+class CharacterClass {
+    constructor(className, classSkills, classLore, dualClass=false) {
         this.className = className,
-        this.classImg = classImg,
         this.classSkills = classSkills,
         this.classLore = classLore,
         this.dualClass = dualClass
@@ -74,6 +72,9 @@ const createCharacter2 = document.getElementById("createCharacter2")
 const createCharacter3 = document.getElementById("createCharacter3")
 const characterProfile = document.getElementById("characterProfile")
 const greetings = document.getElementById("greetings")
+const characterImg = document.getElementById("characterImg")
+const razes = Array.from(document.getElementsByClassName("razes"))
+
 
 /*Pistas de audio*/
 const mainMenuAudio = new Audio("audio/mainMenu.mp3")
@@ -83,16 +84,17 @@ const orcsAudio = new Audio("audio/orcs.mp3")
 const dwarfsAudio = new Audio("audio/dwarfs.mp3")
 
 /*Razas seleccionables*/
-const elf = new Razes ("Elf", new Image().src="img/elf.png", ["Mystical Perception", "Blood Linage Wisdom"], "Lorem Ipsumx100", elfsAudio, new Image().src="img/elvenGarden.jpg", true)
+const elf = new Razes ("Elf", ["Mystical Perception", "Blood Linage Wisdom"], "Lorem Ipsumx100", elfsAudio, new Image().src="img/elvenGarden.jpg", true)
 
-const orc = new Razes ("Orc", new Image().src="img/orc.png", ["Brutal Intimidation", "Beast's Authority"], "Lorem Ipsum", orcsAudio, new Image().src="img/orcgrimmBastion.jpg", true)
+const orc = new Razes ("Orc", ["Brutal Intimidation", "Beast's Authority"], "Lorem Ipsum", orcsAudio, new Image().src="img/orcgrimmBastion.jpg", true)
 
-const human = ("Human", new Image().src="img/human.png", ["Weapon Proficiency", "General's Leadership"], "Lorem ipsum", humansAudio, new Image().src="img/elluKiaDowntowns.jpg", true)
+const human = ("Human", ["Weapon Proficiency", "General's Leadership"], "Lorem ipsum", humansAudio, new Image().src="img/elluKiaDowntowns.jpg", true)
 
-const dwarf = new Razes ("Dwarf", new Image().src="img/dwarf.png", [], "lorem ipsum", dwarfsAudio, new Image().src="fareastIronFederation.jpg")
+const dwarf = new Razes ("Dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="fareastIronFederation.jpg")
 
 /*Clases Seleccionables*/
-const dragonSlayer = new characterClass ("dragonSlayer", new Image().src="img/dualRaze/orcelfmaledragonSlayer.png", ["Dragon Killer", "Scales Skin", "Fire's Breath"], "lorem impsum x 100")
+const warrior = new CharacterClass ("warrior", [], "lorem ipsum x 100")
+const dragonSlayer = new CharacterClass ("dragonSlayer", ["Dragon Killer", "Scales Skin", "Fire's Breath"], "lorem impsum x 100")
 
 function playMusic() {
     mainMenuAudio.play()
@@ -109,6 +111,11 @@ function init(){
 
     returnButton.forEach((button) => {
         button.addEventListener("click", returnScreen)
+    })
+
+    characterImg.src = "img/noCharacter.png"
+    razes.forEach((raze) => { 
+        raze.addEventListener("click", showRazes)
     })
 }
 
@@ -132,6 +139,10 @@ function continueToScreen(e) {
     }
 }
 
+function toLoadGameScreen(){
+    hideSections(loadingGameScreen)
+}
+
 function returnScreen(e) {
     let button = e.target
     let buttonClass = button.getAttribute("class")
@@ -146,9 +157,41 @@ function returnScreen(e) {
     }
 }
 
-function toLoadGameScreen(){
-    hideSections(loadingGameScreen)
-}
+function showRazes(e) {
+    let razes = document.getElementsByClassName("razes")
+    let razesArray = Array.from(razes)
+    let img = document.getElementById("characterImg")
+    let charterImg = e.target
+    let limit = 0
+
+    razesArray.forEach((raze) => {
+        if(raze.checked){
+            limit++
+        }
+    })
+
+    if(limit<=2){
+       for(let i = 0; i < razes.length; i++){ 
+        //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
+        if(charterImg.checked && razes[i].checked && charterImg.id!=razes[i].id){
+                img.src = "img/" + charterImg.id + razes[i].id + ".png"
+                return false
+            } }
+        for(let i = 0; i < razes.length; i++) {
+            //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
+            if(razes[i].checked) {
+                img.src = "img/" + razes[i].id + ".png"
+                return false
+            }
+            if(charterImg.checked) {
+                img.src = "img/" + charterImg.id + ".png"
+                return false
+            } 
+            img.src = "img/noCharacter.png" } } 
+      else {
+        charterImg.checked = false
+    } 
+} 
 
 function hideSections(selectedSection){
     gameSections.forEach((section) => {

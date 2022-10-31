@@ -95,11 +95,6 @@ p {
     padding: 10px 50px 10px 50px;
 }
 
-#orcLabel {
-    background-image: url("img/orc.jpg");
-    background-size: cover;
-}
-
 .razes {
     display: none;
 }
@@ -115,15 +110,21 @@ p {
 }
 
 #humanLabel {
-    background-image: url("img/human.jpg");
+    background-image: url("img/human.png");
     background-size: cover;
 }
 #elfLabel {
-    background-image: url("img/elf.jpg");
+    background-image: url("img/elf.png");
     background-size: cover;
 }
+
+#orcLabel {
+    background-image: url("img/orc.png");
+    background-size: cover;
+}
+
 #dwarfLabel {
-    background-image: url("img/elf.jpg");
+    background-image: url("img/dwarf.png");
     background-size: cover;
 }
 
