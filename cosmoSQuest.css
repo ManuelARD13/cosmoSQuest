@@ -10,13 +10,18 @@ body {
 }
 section {
     width: 100vw;
-    height: 100vh;
+    height: 80vh;
 }
 
-h1 {
+#mainMenuSubtitle {
     font-family: 'Eagle Lake', cursive;
     font-size: 58.59px;
-    margin: -30px 0px 30px 0px;
+    margin: -30px 0px 0px 0px;
+}
+
+h2 {
+    font-size: 46.88px;
+    font-family: 'Eagle Lake', cursive;
 }
 
 h3 {
@@ -27,9 +32,19 @@ p {
     font-family: 'MedievalSharp', cursive;
 }
 
+#headerTitle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 10vh;
+    background: rgb(0, 0, 0, 0.55);
+} 
+
 #startScreen {
     background-color: black;
     display: flex;
+    height: 100vh;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -40,6 +55,7 @@ p {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    height: 100vh;
     font-family: 'Press Start 2P', cursive;
     background-color: black;
 }
@@ -67,6 +83,7 @@ p {
     display: none;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
 #mainMenuDiv {
@@ -87,12 +104,14 @@ p {
     display: none;
     flex-direction: row;
     justify-content: center;
+    padding: 46px 0px 20px 0px;
     gap: 44px;
     background: rgb(0, 0, 0, 0.55);
 }
 
-#chooseRaze {
-    padding: 10px 50px 10px 50px;
+#chooseRaze, #chooseClass {
+    padding: 10px 10px 10px 20px;
+    width: 33vw;
 }
 
 .razes {
@@ -128,14 +147,21 @@ p {
     background-size: cover;
 }
 
-#form {
+#formRazes, #formclasses {
     display: flex;
+    gap: 10px
 }
 
 
-#characterImg {
-    max-width: 485px;
-    max-height: 485px;
+#characterImg, #characterImg2 {
+    max-width: 33vw;
+    max-height: 33vw;
+}
+
+#razeDescription, #classDescription {
+    width: 33vw;
+    padding: 10px 40px 0px 40px;
+    margin: 0px;
 }
 
 #loadingGameScreen {
@@ -144,8 +170,12 @@ p {
 }
 
 #createCharacter2 {
-    background-color: black;
     display: none;
+    flex-direction: row;
+    justify-content: center;
+    padding: 46px 0px 20px 0px;
+    gap: 44px;
+    background: rgb(0, 0, 0, 0.55);
 }
 
 #createCharacter3 {

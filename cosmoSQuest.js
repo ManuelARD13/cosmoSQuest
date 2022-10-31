@@ -63,6 +63,7 @@ class Stats {
 const returnButton = Array.from(document.getElementsByClassName("returnButton"))
 const continueButton = Array.from(document.getElementsByClassName("continueButton"))
 const gameSections = Array.from(document.getElementsByTagName("section"))
+const headerTitle = document.getElementById("headerTitle")
 const branding = document.getElementById("branding")
 const mainMenu = document.getElementById("mainMenu")
     const loadGameButton = document.getElementById("loadGame")
@@ -192,8 +193,17 @@ function showRazes(e) {
 
 function hideSections(selectedSection){
     gameSections.forEach((section) => {
-        section.style.display = "none"
-        selectedSection.style.display = "flex"
+        if(selectedSection.id == "branding"){
+            section.style.display = "none"
+            selectedSection.style.display = "flex"
+        } else if(selectedSection.id == "mainMenu"){
+            section.style.display = "none"
+            selectedSection.style.display = "flex"
+        } else {
+            section.style.display = "none"
+            selectedSection.style.display = "flex"
+            headerTitle.style.display = "flex"
+        }
     })
 }
 

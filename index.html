@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="cosmoSQuest.css">
 </head>
 <body>
+    <header id="headerTitle">
+        <h2>Create Your Character</h2>
+    </header>
     <section id="startScreen">
         <img src="img/diceGoblin.png" alt="">
         <input type="button" class="continueButton" value="START DEMO APP TRIAL" id="startScreenButton">
@@ -21,7 +24,7 @@
     <section id="mainMenu">
         <div id="mainMenuDiv">
             <img src="img/pathfinderLogo.png" alt="pathfinderLogo">
-            <h1>Cosmo's Quest<h1>
+            <h1 id="mainMenuSubtitle">Cosmo's Quest<h1>
             <form id="mainMenuForm">
                 <input type="button" class="continueButton" value="New Game" id="buttonMainMenu">
                 <input type="button" value="Load Game" id="loadGame">
@@ -41,14 +44,14 @@
                 <input type="radio" name="gender" id="genderFemale">
             </div>
             <p>Choose your raze<br>(You can check up to 2 options)</p>
-            <div id="characterStats">
+            <div id="razeSkills">
                 <ul>
                     <li>CON</li>
                     <li>CON</li>
                     <li>CON</li>
                 </ul>
             </div>
-            <form id="form">
+            <form id="formRazes">
                 <input type="checkbox" class="razes" value="human" id="human">
                 <label class="razesLabels" for="human" id="humanLabel"></label>
                 <input type="checkbox" class="razes" value="elf" id="elf">
@@ -63,7 +66,7 @@
         <div>
             <img src="img/noCharacter.png" alt="choose a Raze" id="characterImg">
         </div>
-        <div id="characterDescription">
+        <div id="razeDescription">
             <p>
                 An elf (pl: elves) is a type of humanoid supernatural being in Germanic mythology and folklore (especially North Germanic mythology and folklore). In medieval Germanic-speaking cultures, elves generally seem to have been thought of as beings with magical powers and supernatural beauty, ambivalent towards everyday people and capable of either helping or hindering them.[1] However, the details of these beliefs have varied considerably over time and space and have flourished in both pre-Christian and Christian cultures.
             </p>
@@ -77,10 +80,35 @@
         </div>
     </section>
     <section id="createCharacter2">
-        <div>
-            <p>createCharacter2</p>
+        <div id="chooseClass">
             <input type="button" class="returnButton" value="Return" id="buttonCharacter2">
-            <input type="button" class="continueButton" value="Continue" id="continueCharacter2">
+            <p>Choose your class<br>(You can check up to 2 options)</p>
+            <div id="classSkills">
+                <ul>
+                    <li>CON</li>
+                    <li>CON</li>
+                    <li>CON</li>
+                </ul>
+            </div>
+            <form id="formClasses">
+                <input type="checkbox" class="classes" value="barbarian" id="barbarian">
+                <label class="classesLabels" for="barbarian" id="barbarianLabel"></label>
+                <input type="checkbox" class="classes" value="warrior" id="warrior">
+                <label class="classesLabels" for="warrior" id="warriorLabel"></label>
+                <input type="checkbox" class="classes" value="warlock" id="warlock">
+                <label class="classesLabels" for="warlock" id="warlockLabel"></label>
+                <input type="checkbox" class="classes" value="priest" id="priest">
+                <label class="classesLabels" for="priest" id="priestLabel"></label>
+            </form>
+            <input type="button" class="continueButton" value="Comfirm Selections" id="continueCharacter2">
+        </div>
+        <div>
+            <img src="img/dualRaze/humanelffemalequeenArachne.png" alt="choose a Class" id="characterImg2">
+        </div>
+        <div id="classDescription">
+            <p>
+                 An elf (pl: elves) is a type of humanoid supernatural being in Germanic mythology and folklore (especially North Germanic mythology and folklore). In medieval Germanic-speaking cultures, elves generally seem to have been thought of as beings with magical powers and supernatural beauty, ambivalent towards everyday people and capable of either helping or hindering them.[1] However, the details of these beliefs have varied considerably over time and space and have flourished in both pre-Christian and Christian cultures.
+            </p>
         </div>
     </section>
     <section id="createCharacter3">
