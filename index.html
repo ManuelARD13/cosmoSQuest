@@ -30,12 +30,17 @@
     </section>
     <section id="createCharacter1">
         <div id="chooseRaze">
-            <p>Choose your raze<br>(You can check up to 2 options)</p>
-            <div id="characterDescription">
-                <p>
-                    An elf (pl: elves) is a type of humanoid supernatural being in Germanic mythology and folklore (especially North Germanic mythology and folklore). In medieval Germanic-speaking cultures, elves generally seem to have been thought of as beings with magical powers and supernatural beauty, ambivalent towards everyday people and capable of either helping or hindering them.[1] However, the details of these beliefs have varied considerably over time and space and have flourished in both pre-Christian and Christian cultures.
-                </p>
+            <input type="button" class="returnButton returnMainMenu" value="Return">
+            <p>Character Name</p>
+            <input type="text" name="characterName" id="characterName">
+            <div>
+                <p>Character Gender</p>
+                <label for="genderMale">Male</label>
+                <input type="radio" name="gender" id="genderMale">
+                <label for="genderFemale">Female</label>
+                <input type="radio" name="gender" id="genderFemale">
             </div>
+            <p>Choose your raze<br>(You can check up to 2 options)</p>
             <div id="characterStats">
                 <ul>
                     <li>CON</li>
@@ -52,16 +57,17 @@
                 <label class="razesLabels" for="orc" id="orcLabel"></label>
                 <input type="checkbox" class="razes" value="dwarf" id="dwarf">
                 <label class="razesLabels" for="dwarf" id="dwarfLabel"></label>
-                <input type="button" id="razesButton" value="Choose Raze">
             </form>
+            <input type="button" class="continueButton" value="Comfirm Selections" id="continueCharacter1">
         </div>
         <div>
             <img src="img/noCharacter.png" alt="choose a Raze" id="characterImg">
-        </div>    
-        <div>
-            <input type="button" class="returnButton returnMainMenu" value="Return">
-            <input type="button" class="continueButton" value="Continue" id="continueCharacter1">
         </div>
+        <div id="characterDescription">
+            <p>
+                An elf (pl: elves) is a type of humanoid supernatural being in Germanic mythology and folklore (especially North Germanic mythology and folklore). In medieval Germanic-speaking cultures, elves generally seem to have been thought of as beings with magical powers and supernatural beauty, ambivalent towards everyday people and capable of either helping or hindering them.[1] However, the details of these beliefs have varied considerably over time and space and have flourished in both pre-Christian and Christian cultures.
+            </p>
+        </div>    
     </section>
     <section id="loadingGameScreen">
         <div>

@@ -121,11 +121,15 @@ p {
 #orcLabel {
     background-image: url("img/orc.png");
     background-size: cover;
-}
+} 
 
 #dwarfLabel {
     background-image: url("img/dwarf.png");
     background-size: cover;
+}
+
+#form {
+    display: flex;
 }
 
 
