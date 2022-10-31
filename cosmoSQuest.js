@@ -158,13 +158,10 @@ function returnScreen(e) {
 }
 
 function showRazes(e) {
-    let razes = document.getElementsByClassName("razes")
-    let razesArray = Array.from(razes)
-    let img = document.getElementById("characterImg")
-    let charterImg = e.target
+    let targetedImg= e.target
     let limit = 0
 
-    razesArray.forEach((raze) => {
+    razes.forEach((raze) => {
         if(raze.checked){
             limit++
         }
@@ -173,23 +170,23 @@ function showRazes(e) {
     if(limit<=2){
        for(let i = 0; i < razes.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
-        if(charterImg.checked && razes[i].checked && charterImg.id!=razes[i].id){
-                img.src = "img/" + charterImg.id + razes[i].id + ".png"
+        if (targetedImg.checked && razes[i].checked && targetedImg.id!=razes[i].id){
+                characterImg.src = "img/" + targetedImg.id + razes[i].id + ".png"
                 return false
             } }
         for(let i = 0; i < razes.length; i++) {
             //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
             if(razes[i].checked) {
-                img.src = "img/" + razes[i].id + ".png"
+                characterImg.src = "img/" + razes[i].id + ".png"
                 return false
             }
-            if(charterImg.checked) {
-                img.src = "img/" + charterImg.id + ".png"
+            if (targetedImg.checked) {
+                characterImg.src = "img/" + targetedImg.id + ".png"
                 return false
             } 
-            img.src = "img/noCharacter.png" } } 
+            characterImg.src = "img/noCharacter.png" } } 
       else {
-        charterImg.checked = false
+     targetedImg.checked = false
     } 
 } 
 
