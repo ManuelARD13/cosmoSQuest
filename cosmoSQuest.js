@@ -70,6 +70,7 @@ const mainMenu = document.getElementById("mainMenu")
 const loadingGameScreen = document.getElementById("loadingGameScreen")
 const createCharacter1 = document.getElementById("createCharacter1")
 const createCharacter2 = document.getElementById("createCharacter2")
+    const characterClassesForm = document.getElementById("formClasses")
 const createCharacter3 = document.getElementById("createCharacter3")
 const characterProfile = document.getElementById("characterProfile")
 const greetings = document.getElementById("greetings")
@@ -94,8 +95,13 @@ const human = ("Human", ["Weapon Proficiency", "General's Leadership"], "Lorem i
 const dwarf = new Razes ("Dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="fareastIronFederation.jpg")
 
 /*Clases Seleccionables*/
+const playableClasses = []
 const warrior = new CharacterClass ("warrior", [], "lorem ipsum x 100")
+playableClasses.push(warrior)
 const dragonSlayer = new CharacterClass ("dragonSlayer", ["Dragon Killer", "Scales Skin", "Fire's Breath"], "lorem impsum x 100")
+playableClasses.push(dragonSlayer)
+const warlock = new CharacterClass ("warlock", [], "lorem ipsum x 100")
+playableClasses.push(warlock)
 
 function playMusic() {
     mainMenuAudio.play()
@@ -118,6 +124,8 @@ function init(){
     razes.forEach((raze) => { 
         raze.addEventListener("click", showRazes)
     })
+
+    displayClasses()
 }
 
 function continueToScreen(e) {
@@ -214,6 +222,31 @@ let stats1 = new Stats(20, 20, 20, 20, 20, 20, 6)
 let xerthion = new Character("001", "xerthion", "male", elf, false, dragonSlayer, stats1, elf.razeSkills, dragonSlayer.classSkills)
 
 console.log(xerthion)
+
+function displayClasses(){
+    playableClasses.forEach((pClass) =>{
+        createClassSelectors(pClass)
+    })
+}
+
+function createClassSelectors(characterClass) {
+    let input = document.createElement("input")
+    input.setAttribute("type", "Checkbox")
+    input.setAttribute("class", "classes")
+    input.setAttribute("value", characterClass.className)
+    input.setAttribute("id", characterClass.className)
+    characterClassesForm.appendChild(input)
+
+    let label = document.createElement("label")
+    let labelId = characterClass.className + "Label"
+    label.setAttribute("class", "classesLabels")
+    label.setAttribute("for", characterClass.className)
+    label.setAttribute("id", labelId)
+    let labelImg = "img/thumbnails/" + characterClass.className + "Label.png"
+    label.style.backgroundImage = `url(${labelImg})`
+    label.style.backgroundSize = "cover"
+    characterClassesForm.appendChild(label)
+}
 
 /*
 let screenDisplay {

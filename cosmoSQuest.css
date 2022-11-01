@@ -5,7 +5,7 @@ body {
     flex-direction: column;
     margin: 0px;
     color: white;
-    background-image: url("img/backgroundEmpire.png");
+    background-image: url("img/chaosZone.jpg");
     background-size: cover;
 }
 section {
@@ -114,11 +114,11 @@ p {
     width: 33vw;
 }
 
-.razes {
+.razes, .classes {
     display: none;
 }
 
-.razesLabels {
+.razesLabels, .classesLabels {
     display: inline-block;
     border: 1px solid darkred;
     padding: 10px;
@@ -126,6 +126,10 @@ p {
     height: 100px;
     justify-content: center;
     box-sizing: border-box;
+}
+
+.classesLabels {
+    border: none;
 }
 
 #humanLabel {
@@ -155,7 +159,7 @@ p {
 
 #characterImg, #characterImg2 {
     max-width: 33vw;
-    max-height: 33vw;
+    max-height: 545px;
 }
 
 #razeDescription, #classDescription {
