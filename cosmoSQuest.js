@@ -11,8 +11,8 @@ class Character {
         this.razeSkills = razeSkills,
         this.skills = skills,
 
-        this.characterImg = new Image()
-        this.characterImg.src = "img/" + raze.razeName + "" + gender + "" + characterClasses.className + ".png"
+        this.characterImgRazes = new Image()
+        this.characterImgRazes.src = "img/" + raze.razeName + "" + gender + "" + characterClasses.className + ".png"
         }
     }
 
@@ -74,7 +74,8 @@ const createCharacter2 = document.getElementById("createCharacter2")
 const createCharacter3 = document.getElementById("createCharacter3")
 const characterProfile = document.getElementById("characterProfile")
 const greetings = document.getElementById("greetings")
-const characterImg = document.getElementById("characterImg")
+const characterImgRazes = document.getElementById("characterImgRazes")
+const characterImgClasses = document.getElementById("characterImgClasses")
 const razes = Array.from(document.getElementsByClassName("razes"))
 
 
@@ -95,7 +96,7 @@ const human = ("Human", ["Weapon Proficiency", "General's Leadership"], "Lorem i
 const dwarf = new Razes ("Dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="fareastIronFederation.jpg")
 
 /*Clases Seleccionables*/
-const playableClasses = []
+let playableClasses = []
 const warrior = new CharacterClass ("warrior", [], "lorem ipsum x 100")
 playableClasses.push(warrior)
 const dragonSlayer = new CharacterClass ("dragonSlayer", ["Dragon Killer", "Scales Skin", "Fire's Breath"], "lorem impsum x 100")
@@ -120,7 +121,7 @@ function init(){
         button.addEventListener("click", returnScreen)
     })
 
-    characterImg.src = "img/noCharacter.png"
+    characterImgRazes.src = "img/noCharacter.png"
     razes.forEach((raze) => { 
         raze.addEventListener("click", showRazes)
     })
@@ -180,24 +181,83 @@ function showRazes(e) {
        for(let i = 0; i < razes.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && razes[i].checked && targetedImg.id!=razes[i].id){
-                characterImg.src = "img/" + targetedImg.id + razes[i].id + ".png"
+                characterImgRazes.src = "img/" + targetedImg.id + razes[i].id + ".png"
                 return false
             } }
         for(let i = 0; i < razes.length; i++) {
             //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
             if(razes[i].checked) {
-                characterImg.src = "img/" + razes[i].id + ".png"
+                characterImgRazes.src = "img/" + razes[i].id + ".png"
                 return false
             }
             if (targetedImg.checked) {
-                characterImg.src = "img/" + targetedImg.id + ".png"
+                characterImgRazes.src = "img/" + targetedImg.id + ".png"
                 return false
             } 
-            characterImg.src = "img/noCharacter.png" } } 
+            characterImgRazes.src = "img/noCharacter.png" } } 
       else {
      targetedImg.checked = false
     } 
 } 
+
+function showClasses(e) {
+    let targetedImg= e.target
+    let limit = 0
+
+    playableClasses.forEach((pClass) => {
+        if(pClass.checked){
+            limit++
+        }
+    })
+
+    if(limit<=2){
+       for(let i = 0; i < playableClasses.length; i++){ 
+        //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
+        if (targetedImg.checked && playableClasses[i].checked && targetedImg.id!=playableClasses[i].id){
+                characterImgClasses.src = "img/" + targetedImg.id + playableClasses[i].id + ".png"
+                return false
+            } }
+        for(let i = 0; i < playableClasses.length; i++) {
+            //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
+            if(playableClasses[i].checked) {
+                characterImgClasses.src = "img/" + playableClasses[i].id + ".png"
+                return false
+            }
+            if (targetedImg.checked) {
+                characterImgClasses.src = "img/" + targetedImg.id + ".png"
+                return false
+            } 
+            characterImgClasses.src = characterImgRazes.src} } 
+      else {
+     targetedImg.checked = false
+    } 
+} 
+
+function displayClasses(){
+    playableClasses.forEach((pClass) =>{
+        createClassSelectors(pClass)
+    })
+}
+
+function createClassSelectors(characterClass) {
+    let input = document.createElement("input")
+    input.setAttribute("type", "Checkbox")
+    input.setAttribute("class", "classes")
+    input.setAttribute("value", characterClass.className)
+    input.setAttribute("id", characterClass.className)
+    input.addEventListener("click", showClasses)
+    characterClassesForm.appendChild(input)
+
+    let label = document.createElement("label")
+    let labelId = characterClass.className + "Label"
+    label.setAttribute("class", "classesLabels")
+    label.setAttribute("for", characterClass.className)
+    label.setAttribute("id", labelId)
+    let labelImg = "img/thumbnails/" + characterClass.className + "Label.png"
+    label.style.backgroundImage = `url(${labelImg})`
+    label.style.backgroundSize = "cover"
+    characterClassesForm.appendChild(label)
+}
 
 function hideSections(selectedSection){
     gameSections.forEach((section) => {
@@ -221,35 +281,10 @@ let stats1 = new Stats(20, 20, 20, 20, 20, 20, 6)
 
 let xerthion = new Character("001", "xerthion", "male", elf, false, dragonSlayer, stats1, elf.razeSkills, dragonSlayer.classSkills)
 
-console.log(xerthion)
 
-function displayClasses(){
-    playableClasses.forEach((pClass) =>{
-        createClassSelectors(pClass)
-    })
-}
-
-function createClassSelectors(characterClass) {
-    let input = document.createElement("input")
-    input.setAttribute("type", "Checkbox")
-    input.setAttribute("class", "classes")
-    input.setAttribute("value", characterClass.className)
-    input.setAttribute("id", characterClass.className)
-    characterClassesForm.appendChild(input)
-
-    let label = document.createElement("label")
-    let labelId = characterClass.className + "Label"
-    label.setAttribute("class", "classesLabels")
-    label.setAttribute("for", characterClass.className)
-    label.setAttribute("id", labelId)
-    let labelImg = "img/thumbnails/" + characterClass.className + "Label.png"
-    label.style.backgroundImage = `url(${labelImg})`
-    label.style.backgroundSize = "cover"
-    characterClassesForm.appendChild(label)
-}
 
 /*
 let screenDisplay {
-    characterImg: 
+    characterImgRazes: 
 }
 */
