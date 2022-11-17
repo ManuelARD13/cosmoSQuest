@@ -72,12 +72,19 @@ const createCharacter1 = document.getElementById("createCharacter1")
 const createCharacter2 = document.getElementById("createCharacter2")
     const characterClassesForm = document.getElementById("formClasses")
 const createCharacter3 = document.getElementById("createCharacter3")
+    const buttonDice = document.getElementById("buttonDice")
+    const reRollsDisplay = document.getElementById("reRollDisplay")
+    const reRollMessage = document.getElementById("reRollMessage")
+    const statsScores = Array.from(document.getElementsByClassName("statsScores"))
+    const reRollButtons = Array.from(document.getElementsByClassName("reRollButtons"))
+    let reRolls = 3
 const characterProfile = document.getElementById("characterProfile")
 const greetings = document.getElementById("greetings")
 const characterImgRazes = document.getElementById("characterImgRazes")
 const characterImgClasses = document.getElementById("characterImgClasses")
+let genderAndRazeSelection =""
+const gender = Array.from(document.getElementsByClassName("genderRadioSelectors"))
 const razes = Array.from(document.getElementsByClassName("razes"))
-
 
 /*Pistas de audio*/
 const mainMenuAudio = new Audio("audio/mainMenu.mp3")
@@ -100,12 +107,22 @@ let playableClasses = []
 const warrior = new CharacterClass ("warrior", [], "lorem ipsum x 100")
 playableClasses.push(warrior)
 const dragonSlayer = new CharacterClass ("dragonSlayer", ["Dragon Killer", "Scales Skin", "Fire's Breath"], "lorem impsum x 100")
-playableClasses.push(dragonSlayer)
+/*playableClasses.push(dragonSlayer)*/
 const warlock = new CharacterClass ("warlock", [], "lorem ipsum x 100")
 playableClasses.push(warlock)
+const caster = new CharacterClass ("caster", [], "lorem ipsum x 100")
+playableClasses.push(caster)
 
 function playMusic() {
     mainMenuAudio.play()
+}
+
+function applyGenderSelection(){
+    for(let i=0; i < gender.length; i++){
+        if(gender[i].checked){
+            return gender[i].value
+        }
+    }
 }
 
 function init(){
@@ -124,6 +141,12 @@ function init(){
     characterImgRazes.src = "img/noCharacter.png"
     razes.forEach((raze) => { 
         raze.addEventListener("click", showRazes)
+
+    })
+
+    buttonDice.addEventListener("click", diceRoll)
+    reRollButtons.forEach((button) =>{
+        button.addEventListener("click", reRollStatDice)
     })
 
     displayClasses()
@@ -137,6 +160,7 @@ function continueToScreen(e) {
     } else if(e.target.id == "buttonMainMenu"){
         hideSections(createCharacter1)
     } else if(e.target.id == "continueCharacter1"){
+        characterImgClasses.src = characterImgRazes.src
         hideSections(createCharacter2)
     } else if(e.target.id == "continueLoadGame"){
         hideSections(characterProfile)
@@ -168,6 +192,7 @@ function returnScreen(e) {
 }
 
 function showRazes(e) {
+    let selectedGender = applyGenderSelection()
     let targetedImg= e.target
     let limit = 0
 
@@ -181,17 +206,20 @@ function showRazes(e) {
        for(let i = 0; i < razes.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && razes[i].checked && targetedImg.id!=razes[i].id){
-                characterImgRazes.src = "img/" + targetedImg.id + razes[i].id + ".png"
+                characterImgRazes.src = "img/" + targetedImg.id + razes[i].id + selectedGender + ".png"
+                genderAndRazeSelection = targetedImg.id + "" + razes[i].id + "" + selectedGender
                 return false
             } }
         for(let i = 0; i < razes.length; i++) {
             //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
             if(razes[i].checked) {
-                characterImgRazes.src = "img/" + razes[i].id + ".png"
+                characterImgRazes.src = "img/" + razes[i].id + selectedGender + ".png"
+                genderAndRazeSelection = razes[i].id + "" + selectedGender
                 return false
             }
             if (targetedImg.checked) {
-                characterImgRazes.src = "img/" + targetedImg.id + ".png"
+                characterImgRazes.src = "img/" + targetedImg.id + selectedGender + ".png"
+                genderAndRazeSelection = targetedImg.id + "" + selectedGender
                 return false
             } 
             characterImgRazes.src = "img/noCharacter.png" } } 
@@ -214,17 +242,17 @@ function showClasses(e) {
        for(let i = 0; i < playableClasses.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && playableClasses[i].checked && targetedImg.id!=playableClasses[i].id){
-                characterImgClasses.src = "img/" + targetedImg.id + playableClasses[i].id + ".png"
+                characterImgClasses.src = "imgclasses//" + genderAndRazeSelection + targetedImg.id + playableClasses[i].id + ".png"
                 return false
             } }
         for(let i = 0; i < playableClasses.length; i++) {
             //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
             if(playableClasses[i].checked) {
-                characterImgClasses.src = "img/" + playableClasses[i].id + ".png"
+                characterImgClasses.src = "img/classes/" + genderAndRazeSelection + playableClasses[i].id + ".png"
                 return false
             }
             if (targetedImg.checked) {
-                characterImgClasses.src = "img/" + targetedImg.id + ".png"
+                characterImgClasses.src = "img/classes/" + genderAndRazeSelection + targetedImg.id + ".png"
                 return false
             } 
             characterImgClasses.src = characterImgRazes.src} } 
@@ -267,12 +295,55 @@ function hideSections(selectedSection){
         } else if(selectedSection.id == "mainMenu"){
             section.style.display = "none"
             selectedSection.style.display = "flex"
+            headerTitle.style.display = "none"
         } else {
             section.style.display = "none"
             selectedSection.style.display = "flex"
             headerTitle.style.display = "flex"
         }
     })
+}
+
+function statCalculator(){
+    let statScore = Math.floor(Math.random()* 14) + 7
+    return statScore
+}
+
+function diceRoll(){
+    console.log(statsScores)
+    statsScores.forEach((stat) => {
+        let statScore = statCalculator()
+        stat.innerHTML = statScore
+    })
+    buttonDice.disabled = true
+    showReRollButtons()
+}
+
+function showReRollButtons() {
+    reRollButtons.forEach((button) =>{
+        button.style.display = "flex"
+    })
+    reRollMessage.style.display = "inline-block"
+}
+
+function reRollStatDice(e){
+    if(reRolls > 0){
+       let stat = e.target.id
+        let statScore = document.getElementById(stat + "Score")
+        statScore.innerHTML = statCalculator()
+        reRolls--
+        updateReRolls() 
+    } 
+}
+
+function updateReRolls() {
+    reRollsDisplay.innerHTML = reRolls
+    if(reRolls == 0){
+        reRollMessage.innerHTML = "You have roll all your Re-Roll chances." + "<br>" + "Excellent! this are great stats to begin your epic journey. Congrats!"
+        reRollButtons.forEach((button) => {
+            button.disabled = true
+        })
+    }
 }
 
 window.addEventListener("load", init)

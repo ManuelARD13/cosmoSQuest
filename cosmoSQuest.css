@@ -109,7 +109,7 @@ p {
     background: rgb(0, 0, 0, 0.55);
 }
 
-#chooseRaze, #chooseClass {
+#chooseRaze, #chooseClass, #characterGeneralInfo{
     padding: 10px 10px 10px 20px;
     width: 33vw;
 }
@@ -133,21 +133,21 @@ p {
 }
 
 #humanLabel {
-    background-image: url("img/human.png");
+    background-image: url("img/humanmale.png");
     background-size: cover;
 }
 #elfLabel {
-    background-image: url("img/elf.png");
+    background-image: url("img/elffemale.png");
     background-size: cover;
 }
 
 #orcLabel {
-    background-image: url("img/orc.png");
+    background-image: url("img/orcmale.png");
     background-size: cover;
 } 
 
 #dwarfLabel {
-    background-image: url("img/dwarf.png");
+    background-image: url("img/dwarfmale.png");
     background-size: cover;
 }
 
@@ -157,12 +157,12 @@ p {
 }
 
 
-#characterImgRazes, #characterImgClasses {
+#characterImgRazes, #characterImgClasses, #profileImgSection {
     max-width: 33vw;
     max-height: 545px;
 }
 
-#razeDescription, #classDescription {
+#razeDescription, #classDescription, #characterSkillsInfo {
     width: 33vw;
     padding: 10px 40px 0px 40px;
     margin: 0px;
@@ -187,9 +187,29 @@ p {
     display: none;
 }
 
-#characterProfile{
-    background-color: black;
+.reRollButtons {
     display: none;
+}
+
+#reRollMessage {
+    display: none;
+}
+
+#characterProfile{
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    padding: 46px 0px 20px 0px;
+    gap: 44px;
+    background: rgb(0, 0, 0, 0.55);
+}
+
+#characterName {
+    margin: 0;
+}
+
+#profileImg {
+    max-height: 500px;
 }
 
 #greetings {

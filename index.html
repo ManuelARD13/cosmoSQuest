@@ -39,9 +39,9 @@
             <div>
                 <p>Character Gender</p>
                 <label for="genderMale">Male</label>
-                <input type="radio" name="gender" id="genderMale">
+                <input type="radio" name="gender" class="genderRadioSelectors" value="male" id="genderMale" checked="true">
                 <label for="genderFemale">Female</label>
-                <input type="radio" name="gender" id="genderFemale">
+                <input type="radio" name="gender" class="genderRadioSelectors" value="female" id="genderFemale">
             </div>
             <p>Choose your raze<br>(You can check up to 2 options)</p>
             <div id="razeSkills">
@@ -96,7 +96,7 @@
             <input type="button" class="continueButton" value="Comfirm Selections" id="continueCharacter2">
         </div>
         <div>
-            <img src="https://i.imgur.com/VYu2fvW.png" alt="choose a Class" id="characterImgClasses">
+            <img src="" alt="choose a Class" id="characterImgClasses">
         </div>
         <div id="classDescription">
             <p>
@@ -107,16 +107,91 @@
     <section id="createCharacter3">
         <div>
             <p>createCharacter3</p>
-            <input type="button" class="returnButton" value="Return" id="buttonCharacter3">
+            <p id="reRollMessage">Great! Yet you have <span id="reRollDisplay">3</span> chances to re-roll <br>
+                one of the stat's score you have get. Good Luck!<br></p>
+            <h4>Roll your dices<h4></h4>
+            <table id="statsTable">    
+                <tr>
+                    <th>Stats</th>
+                    <th>Score</th>
+                    <th>Modif.</th>
+                </tr>
+                <tr>
+                    <td> CON</td>
+                    <td><span id="CONScore" class="statsScores">0</span></td>
+                    <td><span id="CONModif">+0</span></td>
+                    <td><input type="button" value="Re-Roll!" class="reRollButtons" id="CON"></td>
+                </tr>
+                <tr>
+                    <td>STR</td>
+                    <td><span id="STRScore" class="statsScores">0</span></td>
+                    <td><span id="STRModif">+0</span></td>
+                    <td><input type="button" value="Re-Roll!" class="reRollButtons" id="STR"></td>
+                </tr>
+                <tr>
+                    <td>DEX</td>
+                    <td><span id="DEXScore" class="statsScores">0</span></td>
+                    <td><span id="DEXModif">+0</span></td>
+                    <td><input type="button" value="Re-Roll!" class="reRollButtons" id="DEX"></td>
+                </tr>
+                <tr>
+                    <td>INT</td>
+                    <td><span id="INTScore" class="statsScores"> 0</span></td>
+                    <td><span id="INTModif">+0</span></td>
+                    <td><input type="button" value="Re-Roll!" class="reRollButtons" id="INT"></td>
+                </tr>
+                <tr>
+                    <td>WIS</td>
+                    <td><span id="WISScore" class="statsScores">0</span></td>
+                    <td><span id="WISModif">+0</span></td>
+                    <td><input type="button" value="Re-Roll!" class="reRollButtons" id="WIS"></td>
+                </tr>
+                <tr>
+                    <td>CHA</td>
+                    <td><span id="CHAScore" class="statsScores">0</span></td>
+                    <td><span id="CHAModif">+0</span></td>
+                    <td><input type="button" value="Re-Roll!" class="reRollButtons" id="CHA"></td>
+                </tr>
+            </table>
+            <input type="button" class="returnButton returnMainMenu" value="Return" id="buttonCharacter3">
+            <input type="button" value="Roll Dice!" id="buttonDice">
             <input type="button" class="continueButton" value="Continue" id="continueCharacter3">
         </div>
     </section>
     <section id="characterProfile">
-        <div>
-            <p>characterProfile</p>
-            <input type="button" class="returnButton returnMainMenu" value="Return">
-            <input type="button" class="continueButton" value="Continue" id="continueProfile">
-        </div>
+            <div id="characterGeneralInfo">
+                <input type="button" class="returnButton returnMainMenu" value="Return">
+                <p>Character Gender</p>
+                <p>Character Raze</p>
+                <p>Attributes</p>
+                <ul>
+                    <li>Stat 1</li>
+                    <li>Stat 1</li>
+                    <li>Stat 1</li>
+                    <li>Stat 1</li>
+                </ul>
+                <input type="button" class="continueButton" value="Continue" id="continueProfile">
+            </div>
+            <div id="profileImgSection">
+                <h3 id="characterName">Character Name</h3>
+                <img src="img/dualRaze/humanelffemalequeenArachne.png" alt="Your Character" id="profileImg">
+            </div>
+            <div id="characterSkillsInfo">
+                <h4>Raze Name</h4>
+                <p>
+                    lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+                    lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+                    lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+                    lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+                </p>
+                <p>Skills</p>
+                <ul>
+                    <li>Skill 1</li>
+                    <li>Skill 1</li>
+                    <li>Skill 1</li>
+                    <li>Skill 1</li>
+                </ul>
+            </div>
     </section>
     <section id="greetings">
         <div>
