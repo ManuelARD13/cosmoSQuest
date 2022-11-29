@@ -160,31 +160,28 @@
     </section>
     <section id="characterProfile">
             <div id="characterGeneralInfo">
-                <input type="button" class="returnButton returnMainMenu" value="Return">
-                <p>Character Gender</p>
-                <p>Character Raze</p>
+                <p id="selectedCharacterGender">Character Gender</p>
+                <p id="selectedCharacterRazeTittle">Character Raze</p>
                 <p>Attributes</p>
-                <ul>
-                    <li>Stat 1</li>
-                    <li>Stat 1</li>
-                    <li>Stat 1</li>
-                    <li>Stat 1</li>
+                <ul id="statsList">
+                
                 </ul>
                 <input type="button" class="continueButton" value="Continue" id="continueProfile">
             </div>
             <div id="profileImgSection">
-                <h3 id="characterName">Character Name</h3>
+                <h3 id="selectedCharacterName">Character Name</h3>
                 <img src="img/dualRaze/humanelffemalequeenArachne.png" alt="Your Character" id="profileImg">
             </div>
             <div id="characterSkillsInfo">
-                <h4>Raze Name</h4>
-                <p>
+                <h4 id="selectedClassName">Raze Name</h4>
+                <p id="characterLore">
                     lorem ipsum lorem ipsum lorem ipsum lorem ipsum
                     lorem ipsum lorem ipsum lorem ipsum lorem ipsum
                     lorem ipsum lorem ipsum lorem ipsum lorem ipsum
                     lorem ipsum lorem ipsum lorem ipsum lorem ipsum
                 </p>
-                <p>Skills</p>
+                <h4>Skills</h4>
+                <p id="razeSkills"></p>
                 <ul>
                     <li>Skill 1</li>
                     <li>Skill 1</li>
@@ -196,7 +193,7 @@
     <section id="greetings">
         <div>
             <p>greetings</p>
-            <input type="button" class="returnButton returnMainMenu" value="Return">
+            <input type="button" class="returnButton returnMainMenu" value="Return" id="greetingsButton">
         </div>
     </section>
     

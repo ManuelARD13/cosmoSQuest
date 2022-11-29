@@ -11,8 +11,7 @@ class Character {
         this.razeSkills = razeSkills,
         this.skills = skills,
 
-        this.characterImgRazes = new Image()
-        this.characterImgRazes.src = "img/" + raze.razeName + "" + gender + "" + characterClasses.className + ".png"
+        this.characterImgSrc = "img/" + raze.razeName + "/" + gender + raze.razeName + "/" + raze.razeName + "" + gender + "" + characterClasses.className + ".png"
         }
     }
 
@@ -37,13 +36,13 @@ class CharacterClass {
 }
 
 class Stats {
-    constructor(CON, STR, DEX, WIS, INT, CHA, characterHeight){
-        this.CON = CON,
-        this.STR = STR,
-        this.DEX = DEX,
-        this.WIS = WIS,
-        this.INT = INT,
-        this.CHA = CHA
+    constructor(stats, characterHeight){
+        this.CON = stats.CONScore,
+        this.STR = stats.STRScore,
+        this.DEX = stats.DEXScore,
+        this.WIS = stats.WISScore,
+        this.INT = stats.INTScore,
+        this.CHA = stats.CHAScore
 
         this.characterHeight = characterHeight + " feets"
 
@@ -60,6 +59,7 @@ class Stats {
 }
 
 /*HTML Elementos*/
+const body = document.getElementsByTagName("body")
 const returnButton = Array.from(document.getElementsByClassName("returnButton"))
 const continueButton = Array.from(document.getElementsByClassName("continueButton"))
 const gameSections = Array.from(document.getElementsByTagName("section"))
@@ -68,9 +68,16 @@ const branding = document.getElementById("branding")
 const mainMenu = document.getElementById("mainMenu")
     const loadGameButton = document.getElementById("loadGame")
 const loadingGameScreen = document.getElementById("loadingGameScreen")
+    const localStorageCharacters = localStorage.getItem("savedCharacters_V1")
+    let savedCharacters
+    let selectionBoxesArray = []
 const createCharacter1 = document.getElementById("createCharacter1")
+    const characterNameInput = document.getElementById("characterName")
+    let selectedRaze = ""
+    let characterName = ""
 const createCharacter2 = document.getElementById("createCharacter2")
     const characterClassesForm = document.getElementById("formClasses")
+    let selectedClass = ""
 const createCharacter3 = document.getElementById("createCharacter3")
     const buttonDice = document.getElementById("buttonDice")
     const reRollsDisplay = document.getElementById("reRollDisplay")
@@ -78,7 +85,18 @@ const createCharacter3 = document.getElementById("createCharacter3")
     const statsScores = Array.from(document.getElementsByClassName("statsScores"))
     const reRollButtons = Array.from(document.getElementsByClassName("reRollButtons"))
     let reRolls = 3
+    let diceRolls = {}
+    let character
 const characterProfile = document.getElementById("characterProfile")
+    const selectedCharacterName = document.getElementById("selectedCharacterName")
+    const profileImg = document.getElementById("profileImg")
+    const selectedClassName = document.getElementById("selectedClassName")
+    const characterLore = document.getElementById("characterLore")
+    const razeSkills = document.getElementById("razeSkills")
+    const selectedCharacterGender = document.getElementById("selectedCharacterGender")
+    const selectedCharacterRazeTittle = document.getElementById("selectedCharacterRazeTittle")
+    const statsList = document.getElementById("statsList")
+    let stats
 const greetings = document.getElementById("greetings")
 const characterImgRazes = document.getElementById("characterImgRazes")
 const characterImgClasses = document.getElementById("characterImgClasses")
@@ -87,20 +105,31 @@ const gender = Array.from(document.getElementsByClassName("genderRadioSelectors"
 const razes = Array.from(document.getElementsByClassName("razes"))
 
 /*Pistas de audio*/
+const playlist = []
 const mainMenuAudio = new Audio("audio/mainMenu.mp3")
-const humansAudio = new Audio("audio/humans.mp3")
-const elfsAudio = new Audio("audio/elfs.mp3")
-const orcsAudio = new Audio("audio/orcs.mp3")
-const dwarfsAudio = new Audio("audio/dwarfs.mp3")
+playlist.push(mainMenuAudio)
+const humansAudio = new Audio("audio/human.mp3")
+playlist.push(humansAudio)
+const elfsAudio = new Audio("audio/elf.mp3")
+playlist.push(elfsAudio)
+const orcsAudio = new Audio("audio/orc.mp3")
+playlist.push(orcsAudio)
+const dwarfsAudio = new Audio("audio/dwarf.mp3")
+playlist.push(dwarfsAudio)
 
 /*Razas seleccionables*/
-const elf = new Razes ("Elf", ["Mystical Perception", "Blood Linage Wisdom"], "Lorem Ipsumx100", elfsAudio, new Image().src="img/elvenGarden.jpg", true)
+const playableRazes = []
+const elf = new Razes ("elf", ["Mystical Perception", "Blood Linage Wisdom"], "Lorem Ipsumx100", elfsAudio, new Image().src="img/elvenGarden.png", true)
+playableRazes.push(elf)
 
-const orc = new Razes ("Orc", ["Brutal Intimidation", "Beast's Authority"], "Lorem Ipsum", orcsAudio, new Image().src="img/orcgrimmBastion.jpg", true)
+const orc = new Razes ("orc", ["Brutal Intimidation", "Beast's Authority"], "Lorem Ipsum", orcsAudio, new Image().src="img/orcgrimmBastion.png", true)
+playableRazes.push(orc)
 
-const human = ("Human", ["Weapon Proficiency", "General's Leadership"], "Lorem ipsum", humansAudio, new Image().src="img/elluKiaDowntowns.jpg", true)
+const human = new Razes ("human", ["Weapon Proficiency", "General's Leadership"], "Lorem ipsum", humansAudio, new Image().src="img/ellukiaDowntowns.png", true)
+playableRazes.push(human)
 
-const dwarf = new Razes ("Dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="fareastIronFederation.jpg")
+const dwarf = new Razes ("dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="img/fareastIronFederation.png")
+playableRazes.push(dwarf)
 
 /*Clases Seleccionables*/
 let playableClasses = []
@@ -113,29 +142,37 @@ playableClasses.push(warlock)
 const caster = new CharacterClass ("caster", [], "lorem ipsum x 100")
 playableClasses.push(caster)
 
-function playMusic() {
-    mainMenuAudio.play()
-}
 
-function applyGenderSelection(){
-    for(let i=0; i < gender.length; i++){
-        if(gender[i].checked){
-            return gender[i].value
-        }
-    }
-}
 
 function init(){
     
     continueButton.forEach((button) => {
+        if(button.id == "continueCharacter1") {
+            button.addEventListener("click", setCharacterName)
+            button.addEventListener("click", () => setRazeBackground(selectedRaze))
+            button.addEventListener("click", setCharacterName)
+        } else if(button.id == "startScreenButton") {
+            button.addEventListener("click", () => mainMenuAudio.play())
+        } else if (button.id == "continueLoadGame"){
+            button.addEventListener("click", loadCharacter)
+        } else if(button.id == "continueCharacter3") {
+            button.addEventListener("click", generateNewCharacter)
+            button.addEventListener("click", () => displayCreatedCharacter(character))
+        } else if(button.id == "continueProfile"){
+            button.addEventListener("click", () => saveCharacter(character))
+        }
         button.addEventListener("click", continueToScreen)
-        /*button.addEventListener("click", playMusic)*/
     })
 
     loadGameButton.addEventListener("click", toLoadGameScreen)
+    loadGameButton.addEventListener("click", displaySavedCharacters)
 
     returnButton.forEach((button) => {
-        button.addEventListener("click", returnScreen)
+        if(button.id == "greetingsButton") {
+            button.addEventListener("click", () => location.reload())
+        } else {
+            button.addEventListener("click", returnScreen)
+        }
     })
 
     characterImgRazes.src = "img/noCharacter.png"
@@ -150,6 +187,12 @@ function init(){
     })
 
     displayClasses()
+    if(!localStorageCharacters){
+        localStorage.setItem("savedCharacters_V1", "[]")
+        savedCharacters = []
+    } else {
+        savedCharacters = JSON.parse(localStorageCharacters)
+    }
 }
 
 function continueToScreen(e) {
@@ -191,6 +234,41 @@ function returnScreen(e) {
     }
 }
 
+function setRazeBackground(selectedRaze) {
+    playlist.forEach((song) => {
+        song.pause()
+        song.currentTime = 0
+    })
+    playableRazes.forEach((raze) => {
+        if(raze.razeName == selectedRaze) {
+            document.body.style.backgroundImage = `url(${raze.razeBKImg})`
+            raze.razeMusicBK.play()
+        }
+    })
+    
+}
+
+function mainTheme() {
+    mainMenuAudio.play()
+}
+
+function generateRandomNumber (){
+    let num = "00" + Math.floor(Math.random() * 100)
+    return num
+}
+
+function applyGenderSelection(){
+    for(let i=0; i < gender.length; i++){
+        if(gender[i].checked){
+            return gender[i].value
+        }
+    }
+}
+
+function setCharacterName() {
+    characterName = characterNameInput.value
+}
+
 function showRazes(e) {
     let selectedGender = applyGenderSelection()
     let targetedImg= e.target
@@ -202,12 +280,13 @@ function showRazes(e) {
         }
     })
 
-    if(limit<=2){
+    if(limit<=1){
        for(let i = 0; i < razes.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && razes[i].checked && targetedImg.id!=razes[i].id){
                 characterImgRazes.src = "img/" + targetedImg.id + razes[i].id + selectedGender + ".png"
                 genderAndRazeSelection = targetedImg.id + "" + razes[i].id + "" + selectedGender
+                selectedRaze = targetedImg.id + razes[i].id
                 return false
             } }
         for(let i = 0; i < razes.length; i++) {
@@ -215,11 +294,13 @@ function showRazes(e) {
             if(razes[i].checked) {
                 characterImgRazes.src = "img/" + razes[i].id + selectedGender + ".png"
                 genderAndRazeSelection = razes[i].id + "" + selectedGender
+                selectedRaze = razes[i].id
                 return false
             }
             if (targetedImg.checked) {
                 characterImgRazes.src = "img/" + targetedImg.id + selectedGender + ".png"
                 genderAndRazeSelection = targetedImg.id + "" + selectedGender
+                selectedRaze = targetedImg.id
                 return false
             } 
             characterImgRazes.src = "img/noCharacter.png" } } 
@@ -238,21 +319,24 @@ function showClasses(e) {
         }
     })
 
-    if(limit<=2){
+    if(limit<=1){
        for(let i = 0; i < playableClasses.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && playableClasses[i].checked && targetedImg.id!=playableClasses[i].id){
                 characterImgClasses.src = "imgclasses//" + genderAndRazeSelection + targetedImg.id + playableClasses[i].id + ".png"
+                selectedClass = targetedImg.id + playableClasses[i].id
                 return false
             } }
         for(let i = 0; i < playableClasses.length; i++) {
             //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
             if(playableClasses[i].checked) {
                 characterImgClasses.src = "img/classes/" + genderAndRazeSelection + playableClasses[i].id + ".png"
+                selectedClass = playableClasses[i].id 
                 return false
             }
             if (targetedImg.checked) {
                 characterImgClasses.src = "img/classes/" + genderAndRazeSelection + targetedImg.id + ".png"
+                selectedClass = targetedImg.id
                 return false
             } 
             characterImgClasses.src = characterImgRazes.src} } 
@@ -310,10 +394,10 @@ function statCalculator(){
 }
 
 function diceRoll(){
-    console.log(statsScores)
     statsScores.forEach((stat) => {
         let statScore = statCalculator()
         stat.innerHTML = statScore
+        diceRolls[stat.id] = statScore
     })
     buttonDice.disabled = true
     showReRollButtons()
@@ -346,16 +430,119 @@ function updateReRolls() {
     }
 }
 
-window.addEventListener("load", init)
+function generateNewCharacter() {
+    let characterID = generateRandomNumber()
+    let gender = applyGenderSelection()
+    stats = new Stats(diceRolls, 6)
 
-let stats1 = new Stats(20, 20, 20, 20, 20, 20, 6)
+    let characterRaze
 
-let xerthion = new Character("001", "xerthion", "male", elf, false, dragonSlayer, stats1, elf.razeSkills, dragonSlayer.classSkills)
+    playableRazes.forEach((raze) => {
+        if(raze.razeName == selectedRaze) {
+            characterRaze = raze
+        }
+    })
 
+    let characterClass 
+    playableClasses.forEach((userClass) => {
+        if(userClass.className == selectedClass) {
+            characterClass = userClass
+        }
+    })
 
-
-/*
-let screenDisplay {
-    characterImgRazes: 
+    character = new Character(characterID, characterName, gender, characterRaze, false, characterClass, stats, characterRaze.razeSkills, characterClass.classSkills)
 }
-*/
+
+function displayCreatedCharacter(character){
+    selectedCharacterName.innerHTML = character.name
+    profileImg.src = character.characterImgSrc
+    selectedClassName.innerHTML = character.characterClasses.className
+    characterLore.innerHTML = character.raze.razeLore
+    razeSkills.innerHTML = character.raze.razeSkills
+    selectedCharacterGender.innerHTML = character.gender
+    selectedCharacterRazeTittle.innerHTML = character.raze.razeName
+
+    displayStats(character, statsList)
+}
+
+function displayStats(character, HTMLElement) {
+    let characterStats = []
+    
+    characterStats.push(character.stats.CON)
+    characterStats.push(character.stats.STR)
+    characterStats.push(character.stats.DEX)
+    characterStats.push(character.stats.INT)
+    characterStats.push(character.stats.WIS)
+    characterStats.push(character.stats.CHA)
+
+    characterStats.forEach((stat) => {
+        let newLi = document.createElement("li")
+        newLi.innerHTML = stat
+        HTMLElement.appendChild(newLi)
+    })
+}
+
+function saveCharacter (character) {
+    savedCharacters.push(character)
+    let parsedSavedCharacters = JSON.stringify(savedCharacters)
+    localStorage.setItem("savedCharacters_V1", parsedSavedCharacters)
+}
+
+function displaySavedCharacters (){
+    savedCharacters.forEach((character) => {
+        if(character != null){
+            let characterName = document.createElement("h4")
+            characterName.innerHTML = character.name
+
+            let characterThumbnail = document.createElement("div")
+            characterThumbnail.setAttribute("class", "loadGameImgContainer")
+            let thumbnail = new Image()
+            thumbnail.src = character.characterImgSrc
+            thumbnail.setAttribute("class", "charactersThumbnail")
+
+            characterThumbnail.appendChild(characterName)
+            characterThumbnail.appendChild(thumbnail)
+
+            let statsUl = document.createElement("ul")
+            displayStats(character, statsUl)
+            
+            let characterDescription = document.createElement("p")
+            characterDescription.innerHTML = character.raze.razeLore
+
+            let characterContainer = document.createElement("div")
+            characterContainer.setAttribute("class", "loadedCharactersDiv")
+
+            let selectionBox = document.createElement("input")
+            selectionBox.setAttribute("type", "radio")
+            selectionBox.setAttribute("id", `${character.name}`)
+            selectionBox.setAttribute("class", "selectionBox")
+            selectionBox.setAttribute("name", "savedCharacters")
+
+            selectionBoxesArray.push(selectionBox)
+
+            characterContainer.appendChild(characterThumbnail)
+            characterContainer.appendChild(statsUl)
+            characterContainer.appendChild(characterDescription)
+            characterContainer.appendChild(selectionBox)
+
+            loadingGameScreen.appendChild(characterContainer)
+        }
+    })
+}
+
+function loadCharacter(){
+    selectionBoxesArray.forEach((selectionBox) => {
+        if(selectionBox.checked){
+            savedCharacters.forEach((character) => {
+                if(character != null){
+                    if(character.name == selectionBox.id){
+                    displayCreatedCharacter(character)
+                    console.log(character)
+                    }
+                }
+            })
+        }
+    })
+}
+
+window.addEventListener("load", init)
