@@ -1,5 +1,21 @@
 /*Constructores*/
 class Character {
+    /*Inicializamos todas las propiedades desde el principio para tener guia de variables por asignar en el proceso de creacion de personaje*/
+    constructor() {
+        this.playerId, /*DONE*/
+        this.name = "",/*DONE*/
+        this.gender = "",/*DONE*/
+        this.raze, /*DONE*/
+        this.dualClass = false,
+        this.characterClasses, /*DONE*/
+        this.stats,
+
+        this.characterImgSrc = "img/noCharacter.png"
+    }
+}
+
+    /* class Character {
+    Inicializamos todas las propiedades desde el principio para tener guia de variables por asignar en el proceso de creacion de personaje
     constructor(playerId, name, gender, raze, dualClass=false, characterClasses, stats, razeSkills, skills) {
         this.playerId = playerId,
         this.name = name,
@@ -13,7 +29,7 @@ class Character {
 
         this.characterImgSrc = "img/" + raze.razeName + "/" + gender + raze.razeName + "/" + raze.razeName + "" + gender + "" + characterClasses.className + ".png"
         }
-    }
+    } */
 
 class Razes {
     constructor(razeName, razeSkills, razeLore, razeMusicBK, razeBKImg, dualRaze=false) {
@@ -32,6 +48,7 @@ class CharacterClass {
         this.classSkills = classSkills,
         this.classLore = classLore,
         this.dualClass = dualClass
+        this.classIconSrc = "img/thumbnails/" + className + "Label.png"
     }
 }
 
@@ -66,6 +83,7 @@ const gameSections = Array.from(document.getElementsByTagName("section"))
 const headerTitle = document.getElementById("headerTitle")
 const branding = document.getElementById("branding")
 const mainMenu = document.getElementById("mainMenu")
+    let character
     const loadGameButton = document.getElementById("loadGame")
 const loadingGameScreen = document.getElementById("loadingGameScreen")
     const localStorageCharacters = localStorage.getItem("savedCharacters_V1")
@@ -73,11 +91,9 @@ const loadingGameScreen = document.getElementById("loadingGameScreen")
     let selectionBoxesArray = []
 const createCharacter1 = document.getElementById("createCharacter1")
     const characterNameInput = document.getElementById("characterName")
-    let selectedRaze = ""
-    let characterName = ""
+    characterNameInput.addEventListener("change", setCharacterName)
 const createCharacter2 = document.getElementById("createCharacter2")
     const characterClassesForm = document.getElementById("formClasses")
-    let selectedClass = ""
 const createCharacter3 = document.getElementById("createCharacter3")
     const buttonDice = document.getElementById("buttonDice")
     const reRollsDisplay = document.getElementById("reRollDisplay")
@@ -86,7 +102,6 @@ const createCharacter3 = document.getElementById("createCharacter3")
     const reRollButtons = Array.from(document.getElementsByClassName("reRollButtons"))
     let reRolls = 3
     let diceRolls = {}
-    let character
 const characterProfile = document.getElementById("characterProfile")
     const selectedCharacterName = document.getElementById("selectedCharacterName")
     const profileImg = document.getElementById("profileImg")
@@ -100,8 +115,7 @@ const characterProfile = document.getElementById("characterProfile")
 const greetings = document.getElementById("greetings")
 const characterImgRazes = document.getElementById("characterImgRazes")
 const characterImgClasses = document.getElementById("characterImgClasses")
-let genderAndRazeSelection =""
-const gender = Array.from(document.getElementsByClassName("genderRadioSelectors"))
+const genderSelection = Array.from(document.getElementsByClassName("genderRadioSelectors"))
 const razes = Array.from(document.getElementsByClassName("razes"))
 
 /*Pistas de audio*/
@@ -147,16 +161,16 @@ playableClasses.push(caster)
 function init(){
     
     continueButton.forEach((button) => {
-        if(button.id == "continueCharacter1") {
-            button.addEventListener("click", setCharacterName)
-            button.addEventListener("click", () => setRazeBackground(selectedRaze))
-            button.addEventListener("click", setCharacterName)
+        if(button.id == "newGame"){
+            button.addEventListener("click", generateNewCharacter)
+        } else if(button.id == "continueCharacter1") {
+            button.addEventListener("click", () => setRazeBackground(character.raze))
         } else if(button.id == "startScreenButton") {
             button.addEventListener("click", () => mainMenuAudio.play())
         } else if (button.id == "continueLoadGame"){
             button.addEventListener("click", loadCharacter)
         } else if(button.id == "continueCharacter3") {
-            button.addEventListener("click", generateNewCharacter)
+            button.addEventListener("click", createStatsObject)
             button.addEventListener("click", () => displayCreatedCharacter(character))
         } else if(button.id == "continueProfile"){
             button.addEventListener("click", () => saveCharacter(character))
@@ -173,6 +187,10 @@ function init(){
         } else {
             button.addEventListener("click", returnScreen)
         }
+    })
+
+    genderSelection.forEach((gender) => {
+        gender.addEventListener("click", applyGenderSelection)
     })
 
     characterImgRazes.src = "img/noCharacter.png"
@@ -200,7 +218,7 @@ function continueToScreen(e) {
         hideSections(branding)
     } else if(e.target.id == "brandingButton"){
         hideSections(mainMenu)
-    } else if(e.target.id == "buttonMainMenu"){
+    } else if(e.target.id == "newGame"){
         hideSections(createCharacter1)
     } else if(e.target.id == "continueCharacter1"){
         characterImgClasses.src = characterImgRazes.src
@@ -240,7 +258,7 @@ function setRazeBackground(selectedRaze) {
         song.currentTime = 0
     })
     playableRazes.forEach((raze) => {
-        if(raze.razeName == selectedRaze) {
+        if(raze.razeName == selectedRaze.razeName) {
             document.body.style.backgroundImage = `url(${raze.razeBKImg})`
             raze.razeMusicBK.play()
         }
@@ -252,26 +270,25 @@ function mainTheme() {
     mainMenuAudio.play()
 }
 
-function generateRandomNumber (){
+function generateRandomID (){
     let num = "00" + Math.floor(Math.random() * 100)
     return num
 }
 
 function applyGenderSelection(){
-    for(let i=0; i < gender.length; i++){
-        if(gender[i].checked){
-            return gender[i].value
+    for(let i=0; i < genderSelection.length; i++){
+        if(genderSelection[i].checked){
+            character.gender = genderSelection[i].value
         }
     }
 }
 
 function setCharacterName() {
-    characterName = characterNameInput.value
+    character.name = characterNameInput.value
 }
 
 function showRazes(e) {
-    let selectedGender = applyGenderSelection()
-    let targetedImg= e.target
+    let targetedImg = e.target
     let limit = 0
 
     razes.forEach((raze) => {
@@ -284,30 +301,52 @@ function showRazes(e) {
        for(let i = 0; i < razes.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && razes[i].checked && targetedImg.id!=razes[i].id){
-                characterImgRazes.src = "img/" + targetedImg.id + razes[i].id + selectedGender + ".png"
-                genderAndRazeSelection = targetedImg.id + "" + razes[i].id + "" + selectedGender
-                selectedRaze = targetedImg.id + razes[i].id
+                character.characterImgSrc = "img/" + targetedImg.id + razes[i].id + character.gender + ".png"
+                characterImgRazes.src = character.characterImgSrc
+                let dualRazeSelection = targetedImg.id + "" + razes[i].id
+                character.raze = razeSelection(dualRazeSelection)
+                console.log(character.raze)
+                /*genderAndRazeSelection = targetedImg.id + "" + razes[i].id + "" + character.gender
+                selectedRaze = targetedImg.id + razes[i].id*/
                 return false
             } }
+
         for(let i = 0; i < razes.length; i++) {
-            //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
+            //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar solo el elemento "razes[x]:checked", o el elemento "target:checked" segun corresponda
             if(razes[i].checked) {
-                characterImgRazes.src = "img/" + razes[i].id + selectedGender + ".png"
-                genderAndRazeSelection = razes[i].id + "" + selectedGender
-                selectedRaze = razes[i].id
+                character.characterImgSrc = "img/" + razes[i].id + character.gender + ".png"
+                characterImgRazes.src = character.characterImgSrc
+                razeSelection(razes[i])
+                console.log(character.raze)
+                /*genderAndRazeSelection = razes[i].id + "" + character.gender
+                selectedRaze = razes[i].id*/
                 return false
             }
             if (targetedImg.checked) {
-                characterImgRazes.src = "img/" + targetedImg.id + selectedGender + ".png"
-                genderAndRazeSelection = targetedImg.id + "" + selectedGender
-                selectedRaze = targetedImg.id
+                character.characterImgSrc = "img/" + targetedImg.id + character.gender + ".png"
+                characterImgRazes.src = character.characterImgSrc
+                razeSelection(targetedImg)
+                console.log(character.raze)
+                /*genderAndRazeSelection = targetedImg.id + "" + character.gender
+                selectedRaze = targetedImg.id*/
                 return false
             } 
-            characterImgRazes.src = "img/noCharacter.png" } } 
-      else {
-     targetedImg.checked = false
+            characterImgRazes.src = character.characterImgSrc
+            } 
+
+        } else {
+            targetedImg.checked = false
     } 
 } 
+
+function razeSelection(razeLabelChecked){
+    playableRazes.forEach((raze) => {
+        if(raze.razeName == razeLabelChecked.id){
+            console.log(raze)
+            character.raze = raze
+        }
+    })
+}
 
 function showClasses(e) {
     let targetedImg= e.target
@@ -323,20 +362,34 @@ function showClasses(e) {
        for(let i = 0; i < playableClasses.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && playableClasses[i].checked && targetedImg.id!=playableClasses[i].id){
-                characterImgClasses.src = "imgclasses//" + genderAndRazeSelection + targetedImg.id + playableClasses[i].id + ".png"
-                selectedClass = targetedImg.id + playableClasses[i].id
+
+                let classLabelString = targetedImg.id + "" + playableClasses[i].id
+               classSelection(classLabelString)
+
+                character.characterImgSrc = "img/" + character.raze.razeName + "/" + character.gender + character.raze.razeName + "/" + character.raze.razeName + "" + character.gender + "" + character.characterClasses.className + ".png"
+               
+                characterImgClasses.src = character.characterImgSrc
+                
                 return false
             } }
         for(let i = 0; i < playableClasses.length; i++) {
             //Si no, iteramos sobre el arreglo "razes" de nuevo para mostrar, o el elemento "":checked", o el elemento "target:checked" segun corresponda
             if(playableClasses[i].checked) {
-                characterImgClasses.src = "img/classes/" + genderAndRazeSelection + playableClasses[i].id + ".png"
-                selectedClass = playableClasses[i].id 
+                classSelection(playableClasses[i].id)
+
+                character.characterImgSrc = "img/" + character.raze.razeName + "/" + character.gender + character.raze.razeName + "/" + character.raze.razeName + "" + character.gender + "" + character.characterClasses.className + ".png"
+
+                characterImgClasses.src = character.characterImgSrc
+    
                 return false
             }
             if (targetedImg.checked) {
-                characterImgClasses.src = "img/classes/" + genderAndRazeSelection + targetedImg.id + ".png"
-                selectedClass = targetedImg.id
+                classSelection(targetedImg.id)
+
+                character.characterImgSrc = "img/" + character.raze.razeName + "/" + character.gender + character.raze.razeName + "/" + character.raze.razeName + "" + character.gender + "" + character.characterClasses.className + ".png"
+                
+                characterImgClasses.src = character.characterImgSrc
+    
                 return false
             } 
             characterImgClasses.src = characterImgRazes.src} } 
@@ -344,6 +397,14 @@ function showClasses(e) {
      targetedImg.checked = false
     } 
 } 
+
+function classSelection(classLabelString){
+    playableClasses.forEach((pClass) => {
+        if(pClass.className == classLabelString){
+            character.characterClasses = pClass
+        }
+    })
+}
 
 function displayClasses(){
     playableClasses.forEach((pClass) =>{
@@ -365,8 +426,7 @@ function createClassSelectors(characterClass) {
     label.setAttribute("class", "classesLabels")
     label.setAttribute("for", characterClass.className)
     label.setAttribute("id", labelId)
-    let labelImg = "img/thumbnails/" + characterClass.className + "Label.png"
-    label.style.backgroundImage = `url(${labelImg})`
+    label.style.backgroundImage = `url(${characterClass.classIconSrc})`
     label.style.backgroundSize = "cover"
     characterClassesForm.appendChild(label)
 }
@@ -430,27 +490,16 @@ function updateReRolls() {
     }
 }
 
-function generateNewCharacter() {
-    let characterID = generateRandomNumber()
-    let gender = applyGenderSelection()
-    stats = new Stats(diceRolls, 6)
+function generateNewCharacter(){
+    character = new Character()
 
-    let characterRaze
+    let characterID = generateRandomID()
+    character.playerId = characterID
+    applyGenderSelection()
+}
 
-    playableRazes.forEach((raze) => {
-        if(raze.razeName == selectedRaze) {
-            characterRaze = raze
-        }
-    })
-
-    let characterClass 
-    playableClasses.forEach((userClass) => {
-        if(userClass.className == selectedClass) {
-            characterClass = userClass
-        }
-    })
-
-    character = new Character(characterID, characterName, gender, characterRaze, false, characterClass, stats, characterRaze.razeSkills, characterClass.classSkills)
+function createStatsObject(){
+    character.stats = new Stats(diceRolls, 6)
 }
 
 function displayCreatedCharacter(character){
