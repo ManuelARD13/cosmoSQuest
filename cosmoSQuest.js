@@ -2,12 +2,12 @@
 class Character {
     /*Inicializamos todas las propiedades desde el principio para tener guia de variables por asignar en el proceso de creacion de personaje*/
     constructor() {
-        this.playerId, /*DONE*/
-        this.name = "",/*DONE*/
-        this.gender = "",/*DONE*/
-        this.raze, /*DONE*/
+        this.playerId,
+        this.name = "",
+        this.gender = "",
+        this.raze, 
         this.dualClass = false,
-        this.characterClasses, /*DONE*/
+        this.characterClasses,
         this.stats,
 
         this.characterImgSrc = "img/noCharacter.png"
@@ -54,25 +54,8 @@ class Character {
     }
 }
 
-    /* class Character {
-    Inicializamos todas las propiedades desde el principio para tener guia de variables por asignar en el proceso de creacion de personaje
-    constructor(playerId, name, gender, raze, dualClass=false, characterClasses, stats, razeSkills, skills) {
-        this.playerId = playerId,
-        this.name = name,
-        this.gender = gender,
-        this.raze = raze,
-        this.dualClass = dualClass,
-        this.characterClasses = characterClasses,
-        this.stats = stats,
-        this.razeSkills = razeSkills,
-        this.skills = skills,
-
-        this.characterImgSrc = "img/" + raze.razeName + "/" + gender + raze.razeName + "/" + raze.razeName + "" + gender + "" + characterClasses.className + ".png"
-        }
-    } */
-
 class Razes {
-    constructor(razeName, razeSkills, razeLore, razeMusicBK, razeBKImg, dualRaze=false, razeImgFemale, razeImgMale) {
+    constructor(razeName, razeSkills, razeLore, razeMusicBK, razeBKImg, razeImgFemale, razeImgMale, availableClassesObj, dualRaze=false) {
         this.razeName = razeName,
         this.razeSkills = razeSkills,
         this.razeLore = razeLore,
@@ -81,6 +64,7 @@ class Razes {
         this.dualRaze = dualRaze
         this.razeImgFemale = razeImgFemale
         this.razeImgMale = razeImgMale
+        this.availableClasses = availableClassesObj
     }
 }
 
@@ -174,249 +158,219 @@ playlist.push(orcsAudio)
 const dwarfsAudio = new Audio("audio/dwarf.mp3")
 playlist.push(dwarfsAudio)
 
-/*Razas seleccionables*/
-const playableRazes = []
-const elf = new Razes ("elf", ["Mystical Perception", "Blood Linage Wisdom"], "Lorem Ipsumx100", elfsAudio, new Image().src="https://i.imgur.com/SylK7Kb.png", true, "img/elffemale.png", "img/elfmale.png")
-playableRazes.push(elf)
-
-const orc = new Razes ("orc", ["Brutal Intimidation", "Beast's Authority"], "Lorem Ipsum", orcsAudio, new Image().src="img/orcgrimmBastion.png", true, "img/orcfemale.png", "https://i.imgur.com/BHSVxDH.png")
-playableRazes.push(orc)
-
-const human = new Razes ("human", ["Weapon Proficiency", "General's Leadership"], "Lorem ipsum", humansAudio, new Image().src="img/ellukiaDowntowns.png", true, "img/humanfemale.png", "img/humanmale.png")
-playableRazes.push(human)
-
-const dwarf = new Razes ("dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="img/fareastIronFederation.png", false, "img/dwarffemale.png", "img/dwarfmale.png")
-playableRazes.push(dwarf)
-
 /*Clases Seleccionables*/
 let playableClasses = []
-/*DualClasses */
+/*dualClasses */
 const dragonSlayer = new CharacterClass ("dragonSlayer", ["Dragon Killer", "Scales Skin", "Fire's Breath"], "lorem impsum x 100")
 /*playableClasses.push(dragonSlayer)*/
 
-const assasinImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "img/orc/maleorc/orcmaleranger.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
+/*standarClasses */
 const assasin = new CharacterClass ("assasin", [], "lorem ipsum x 100", assasinImg)
 playableClasses.push(assasin)
-
 
 const barbarian = new CharacterClass ("barbarian", [], "lorem ipsum x 100", barbarianImg)
 playableClasses.push(barbarian)
 
-const berzerkerImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "https://i.imgur.com/skBm0fj.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
 const berzerker = new CharacterClass ("berzerker", [], "lorem ipsum x 100", berzerkerImg)
 playableClasses.push(berzerker)
 
-const fighterImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "img/orc/maleorc/orcmaleranger.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
-const fighter = new CharacterClass ("fighter", [], "lorem ipsum x 100", fighterImg)
-playableClasses.push(fighter)
-
-const casterImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "img/orc/maleorc/orcmaleranger.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
 const caster = new CharacterClass ("caster", [], "lorem ipsum x 100", casterImg)
 playableClasses.push(caster)
 
-const hunterImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "https://i.imgur.com/7tiOEWc.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
+const celestialDefender = new CharacterClass ("celestialDefender", [], "lorem ipsum x 100", celestialDefenderImg)
+playableClasses.push(celestialDefender)
+
+const crusader = new CharacterClass ("crusader", [], "lorem ipsum x 100", crusaderImg)
+playableClasses.push(crusader)
+
+const dragonTaimer = new CharacterClass ("dragonTaimer", [], "lorem ipsum x 100", dragonTaimerImg)
+playableClasses.push(dragonTaimer)
+
+const fighter = new CharacterClass ("fighter", [], "lorem ipsum x 100", fighterImg)
+playableClasses.push(fighter)
+
+const explorer = new CharacterClass ("explorer", [], "lorem ipsum x 100", explorerImg)
+playableClasses.push(explorer)
+
 const hunter = new CharacterClass ("hunter", [], "lorem ipsum x 100", hunterImg)
 playableClasses.push(hunter)
 
-const paladinImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "img/orc/maleorc/orcmaleranger.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
+const ironLord = new CharacterClass ("ironLord", [], "lorem ipsum x 100", ironLordImg)
+playableClasses.push(ironLord)
+
+const knight = new CharacterClass ("knight", [], "lorem ipsum x 100", knightImg)
+playableClasses.push(knight)
+
+const monk = new CharacterClass ("monk", [], "lorem ipsum x 100", monkImg)
+playableClasses.push(monk)
+
+const necromancer = new CharacterClass ("necromancer", [], "lorem ipsum x 100", necromancerImg)
+playableClasses.push(necromancer)
+
 const paladin = new CharacterClass ("paladin", [], "lorem ipsum x 100", paladinImg)
 playableClasses.push(paladin)
 
-const priestImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "img/orc/maleorc/orcmaleranger.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
 const priest = new CharacterClass ("priest", [], "lorem ipsum x 100", priestImg)
 playableClasses.push(priest)
-
-const rangerImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "https://i.imgur.com/N2CTDqa.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
 
 const ranger = new CharacterClass ("ranger", [], "lorem ipsum x 100", rangerImg)
 playableClasses.push(ranger)
 
-const warlockImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "https://i.imgur.com/1BG1ViL.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "https://i.imgur.com/1BG1ViL.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
+const shaman = new CharacterClass ("shaman", [], "lorem ipsum x 100", shamanImg)
+playableClasses.push(shaman)
+
+const warchief = new CharacterClass ("warchief", [], "lorem ipsum x 100", warchiefImg)
+playableClasses.push(warchief)
 
 const warlock = new CharacterClass ("warlock", [], "lorem ipsum x 100", warlockImg)
 playableClasses.push(warlock)
 
-const warriorImg = {
-    human: {
-        male: "img/human/malehuman/humanmalehunter.png",
-        female: "img/human/femalehuman/humanfemalehunter.png"
-    },
-    elf: {
-        male: "img/elf/maleelf/elfmaleranger.png",
-        female: "img/elf/femaleelf/elffemaleranger.png"
-    },
-    orc: {
-        male: "https://i.imgur.com/sWlqn1t.png",
-        female: "img/orc/femaleorc/orcfemaleranger.png"
-    },
-    dwarf: {
-        male: "img/dwarf/maledwarf/dwarfmaleranger.png",
-        female: "img/dwarf/femaledwarf/dwarffemaleranger.png"
-    }
-}
-
 const warrior = new CharacterClass ("warrior", [], "lorem ipsum x 100", warriorImg)
 playableClasses.push(warrior)
 
+/*Razas seleccionables*/
+const playableRazes = []
+
+const elfAvailableClasses = {
+    male: [
+        assasin,
+        /*bard,*/
+        caster,
+        celestialDefender,
+        /*druid,*/
+        hunter,
+        paladin,
+        ranger,
+        /*samurai,*/
+        warrior,
+        warlock
+    ],
+    female: [
+        assasin,
+        caster,
+        dragonTaimer,
+        /*druid, */
+        hunter,
+        knight,
+        paladin,
+        priest,
+        ranger,
+        /*samurai,*/
+        warrior,
+        warlock
+    ]
+}
+const elf = new Razes ("elf", ["Mystical Perception", "Blood Linage Wisdom"], "Lorem Ipsumx100", elfsAudio, new Image().src="https://i.imgur.com/SylK7Kb.png", "img/elffemale.png", "img/elfmale.png", elfAvailableClasses, true)
+playableRazes.push(elf)
+
+const orcAvailableClasses = {
+    male: [
+        barbarian,
+        berzerker,
+        /*bard,*/
+        hunter,
+        necromancer,
+        ranger,
+        /*rider,*/
+        shaman,
+        warchief,
+        warrior,
+        warlock
+    ],
+    female: [
+        assasin,
+        barbarian,
+        fighter,
+        hunter,
+        priest,
+        ranger,
+        warrior,
+        warlock
+    ]
+}
+
+const orc = new Razes ("orc", ["Brutal Intimidation", "Beast's Authority"], "Lorem Ipsum", orcsAudio, new Image().src="img/orcgrimmBastion.png","img/orcfemale.png", "https://i.imgur.com/BHSVxDH.png", orcAvailableClasses, true)
+playableRazes.push(orc)
+
+const humanAvailableClasses = {
+    male: [
+        assasin,
+        barbarian,
+        berzerker,
+        /*bard,*/
+        caster,
+        crusader,
+        fighter,
+        hunter,
+        knight,
+        paladin,
+        /*raider,*/
+        /*samurai,*/
+        warrior
+    ],
+    female: [
+        barbarian,
+        /*bard,*/
+        berzerker,
+        caster,
+        crusader,
+        /*druid, */
+        fighter,
+        /*gunslinger, */
+        knight,
+        monk,
+        priest,
+        ranger,
+        /*samurai*/
+        shaman,
+        warrior,
+        warlock
+    ]
+}
+
+const human = new Razes ("human", ["Weapon Proficiency", "General's Leadership"], "Lorem ipsum", humansAudio, new Image().src="img/ellukiaDowntowns.png", "img/humanfemale.png", "img/humanmale.png", humanAvailableClasses, true)
+playableRazes.push(human)
+
+const dwarfAvailableClasses = {
+    male: [
+        assasin,
+        barbarian,
+        caster,
+        explorer,
+        ironLord,
+        paladin,
+        priest,
+        ranger,
+        shaman,
+        warrior,
+        warlock
+    ],
+    female: [
+        explorer,
+        paladin,
+        priest,
+        ranger,
+        warrior,
+    ]
+}
+
+const dwarf = new Razes ("dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="img/fareastIronFederation.png", "img/dwarffemale.png", "img/dwarfmale.png", dwarfAvailableClasses, true)
+playableRazes.push(dwarf)
+
+
+function createClassesImg() {
+    let createImgs = document.createElement("script")
+    createImgs.src = "mediaResources.js"
+    trial.appendChild(createImgs)
+    initImgs()
+}
 
 function init(){
     
     continueButton.forEach((button) => {
         if(button.id == "newGame"){
             button.addEventListener("click", generateNewCharacter)
+            button.addEventListener("click", createClassesImg)
         } else if(button.id == "continueCharacter1") {
             button.addEventListener("click", () => setRazeBackground(character.raze))
         } else if(button.id == "startScreenButton") {
@@ -458,15 +412,12 @@ function init(){
         button.addEventListener("click", reRollStatDice)
     })
 
-    displayClasses()
     if(!localStorageCharacters){
         localStorage.setItem("savedCharacters_V1", "[]")
         savedCharacters = []
     } else {
         savedCharacters = JSON.parse(localStorageCharacters)
     }
-
-    console.log(playableClasses)
 }
 
 function continueToScreen(e) {
@@ -479,6 +430,7 @@ function continueToScreen(e) {
     } else if(e.target.id == "continueCharacter1"){
         characterImgClasses.src = characterImgRazes.src
         hideSections(createCharacter2)
+        displayClasses(character.raze)
     } else if(e.target.id == "continueLoadGame"){
         hideSections(characterProfile)
     } else if(e.target.id == "continueCharacter2"){
@@ -593,7 +545,6 @@ function showRazes(e) {
 function razeSelection(razeLabelChecked){
     playableRazes.forEach((raze) => {
         if(raze.razeName == razeLabelChecked.id){
-            console.log(raze)
             character.raze = raze
         }
     })
@@ -618,7 +569,6 @@ function showClasses(e) {
                classSelection(classLabelString)
 
                 character.setImg()
-                console.log(character.characterImgSrc)
                
                 characterImgClasses.src = character.characterImgSrc
                 
@@ -630,7 +580,6 @@ function showClasses(e) {
                 classSelection(playableClasses[i].id)
 
                 character.setImg()
-                console.log(character.characterImgSrc)
 
                 characterImgClasses.src = character.characterImgSrc
     
@@ -638,9 +587,7 @@ function showClasses(e) {
             }
             if (targetedImg.checked) {
                 classSelection(targetedImg.id)
-                console.log(character.characterClasses)
                 character.setImg()
-                console.log(character.characterImgSrc)
                 
                 characterImgClasses.src = character.characterImgSrc
     
@@ -660,10 +607,17 @@ function classSelection(classLabelString){
     })
 }
 
-function displayClasses(){
-    playableClasses.forEach((pClass) =>{
-        createClassSelectors(pClass)
-    })
+function displayClasses(characterRaze){
+    characterClassesForm.innerHTML = ""
+    if(character.gender == "male") {
+        characterRaze.availableClasses.male.forEach((pClass) =>{
+            createClassSelectors(pClass)
+        })
+    } else if(character.gender == "female") {
+        characterRaze.availableClasses.female.forEach((pClass) =>{
+            createClassSelectors(pClass)
+        })
+    }
 }
 
 function createClassSelectors(characterClass) {
@@ -765,6 +719,7 @@ function displayCreatedCharacter(character){
     razeSkills.innerHTML = character.raze.razeSkills
     selectedCharacterGender.innerHTML = character.gender
     selectedCharacterRazeTittle.innerHTML = character.raze.razeName
+    setRazeBackground(character.raze)
 
     displayStats(character, statsList)
 }
@@ -841,7 +796,6 @@ function loadCharacter(){
                 if(character != null){
                     if(character.name == selectionBox.id){
                     displayCreatedCharacter(character)
-                    console.log(character)
                     }
                 }
             })

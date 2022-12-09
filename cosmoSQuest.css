@@ -139,13 +139,19 @@ p {
     padding: 46px 0px 20px 0px;
     gap: 44px;
     background: rgb(0, 0, 0, 0.2);
-    background-image: url("img/chaosZone.jpg");
+    background-image: url("https://i.imgur.com/svtJbZs.jpg");
     background-size: cover;
 }
 
 #chooseRaze, #chooseClass, #characterGeneralInfo{
     padding: 10px 10px 10px 20px;
     width: 33vw;
+    border: 3px solid #d9952e;
+    max-height: 530px;
+    max-width: 33vw;
+    overflow: auto;
+    -webkit-animation: slide-in-left 1s ease-out both;
+	        animation: slide-in-left 1s ease-out both;
 }
 
 .razes, .classes {
@@ -193,14 +199,19 @@ p {
 
 #characterImgRazes, #characterImgClasses, #profileImgSection {
     max-width: 33vw;
-    max-height: 545px;
+    max-height: 530px;
 }
 
 
 #razeDescription, #classDescription, #characterSkillsInfo {
     width: 33vw;
+    max-width: 33vw;
+    max-height: 530px;
     padding: 10px 40px 0px 40px;
     margin: 0px;
+    border: 3px solid #d9952e;
+        -webkit-animation: slide-in-right 1s ease-out both;
+                animation: slide-in-right 1s ease-out both;
 }
 
 #loadingGameScreen {
@@ -317,5 +328,56 @@ p {
       opacity: 1;
     }
   }
+
+@-webkit-keyframes slide-in-left {
+    0% {
+      -webkit-transform: translateX(-1000px);
+              transform: translateX(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-left {
+    0% {
+      -webkit-transform: translateX(-1000px);
+              transform: translateX(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+@-webkit-keyframes slide-in-right {
+    0% {
+      -webkit-transform: translateX(1000px);
+              transform: translateX(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-right {
+    0% {
+      -webkit-transform: translateX(1000px);
+              transform: translateX(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
   
   
