@@ -1,5 +1,3 @@
-/*Testing branches*/
-
 /*Constructores*/
 class Character {
     /*Inicializamos todas las propiedades desde el principio para tener guia de variables por asignar en el proceso de creacion de personaje*/
@@ -361,6 +359,12 @@ const dwarfAvailableClasses = {
 const dwarf = new Razes ("dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="img/fareastIronFederation.png", "img/dwarffemale.png", "img/dwarfmale.png", dwarfAvailableClasses, true)
 playableRazes.push(dwarf)
 
+function anaibleRazeSelection() {
+    razes.forEach((raze) => {
+        raze.disabled = false
+    })
+}
+
 function init(){
     
     continueButton.forEach((button) => {
@@ -450,6 +454,9 @@ function returnScreen(e) {
     if(buttonClass == "returnButton returnMainMenu"){
         hideSections(mainMenu)
     } else if(button.id == "buttonCharacter2") {
+        character.characterClasses = undefined
+        character.raze = undefined
+        setRazeBackground()
         hideSections(createCharacter1)
     } else if(button.id == "buttonCharacter3") {
         hideSections(createCharacter2)
@@ -490,6 +497,7 @@ function applyGenderSelection(){
             character.gender = genderSelection[i].value
         }
     }
+    anaibleRazeSelection()
 }
 
 function setCharacterName() {
@@ -498,15 +506,15 @@ function setCharacterName() {
 
 function showRazes(e) {
     let targetedImg = e.target
-    let limit = 0
+    /*let limit = 0
 
     razes.forEach((raze) => {
         if(raze.checked){
             limit++
         }
-    })
+    })*/
 
-    if(limit<=1){
+    /*if(limit<=1){*/
        for(let i = 0; i < razes.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && razes[i].checked && targetedImg.id!=razes[i].id){
@@ -534,10 +542,12 @@ function showRazes(e) {
             characterImgRazes.src = character.characterImgSrc
             } 
 
-        } else {
-            targetedImg.checked = false
-    } 
-} 
+        } 
+        
+/*else {
+     targetedImg.checked = false
+}
+} */
 
 function razeSelection(razeLabelChecked){
     playableRazes.forEach((raze) => {
@@ -549,15 +559,15 @@ function razeSelection(razeLabelChecked){
 
 function showClasses(e) {
     let targetedImg= e.target
-    let limit = 0
+    /*let limit = 0
 
     playableClasses.forEach((pClass) => {
         if(pClass.checked){
             limit++
         }
-    })
+    })*/
 
-    if(limit<=1){
+    /*if(limit<=1){*/
        for(let i = 0; i < playableClasses.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && playableClasses[i].checked && targetedImg.id!=playableClasses[i].id){
@@ -590,11 +600,12 @@ function showClasses(e) {
     
                 return false
             } 
-            characterImgClasses.src = characterImgRazes.src} } 
-      else {
+            characterImgClasses.src = characterImgRazes.src} 
+    } 
+      /*else {
      targetedImg.checked = false
     } 
-} 
+} */
 
 function classSelection(classLabelString){
     playableClasses.forEach((pClass) => {
@@ -619,9 +630,9 @@ function displayClasses(characterRaze){
 
 function createClassSelectors(characterClass) {
     let input = document.createElement("input")
-    input.setAttribute("type", "Checkbox")
+    input.setAttribute("type", "radio")
     input.setAttribute("class", "classes")
-    input.setAttribute("value", characterClass.className)
+    input.setAttribute("name", "pClasses")
     input.setAttribute("id", characterClass.className)
     input.addEventListener("click", showClasses)
     characterClassesForm.appendChild(input)

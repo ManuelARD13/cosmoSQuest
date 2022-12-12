@@ -200,8 +200,14 @@ p {
 
 
 #characterImgRazes, #characterImgClasses, #profileImgSection {
-    max-width: 33vw;
     max-height: 530px;
+    max-width: 27.01vw;
+}
+
+#characterImgRazesContainer, #characterImgClassesContainer, #profileImgContainer{
+  display: flex;
+  justify-content: center;
+  width: 27.01vw;
 }
 
 

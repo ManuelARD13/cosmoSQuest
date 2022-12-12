@@ -39,7 +39,7 @@
             <div>
                 <p>Character Gender</p>
                 <label for="genderMale">Male</label>
-                <input type="radio" name="gender" class="genderRadioSelectors" value="male" id="genderMale" checked="true">
+                <input type="radio" name="gender" class="genderRadioSelectors" value="male" id="genderMale">
                 <label for="genderFemale">Female</label>
                 <input type="radio" name="gender" class="genderRadioSelectors" value="female" id="genderFemale">
             </div>
@@ -52,18 +52,22 @@
                 </ul>
             </div>
             <form id="formRazes">
-                <input type="checkbox" class="razes" value="human" id="human">
+                <input type="radio" name="razes" class="razes" id="human" disabled>
+                <!--<input type="checkbox" class="razes" value="human" id="human">-->
                 <label class="razesLabels" for="human" id="humanLabel"></label>
-                <input type="checkbox" class="razes" value="elf" id="elf">
+                <input type="radio" name="razes" class="razes" id="elf" disabled>
+                <!--<input type="checkbox" class="razes" value="elf" id="elf">-->
                 <label class="razesLabels" for="elf" id="elfLabel"></label>
-                <input type="checkbox" class="razes" value="orc" id="orc">
+                <input type="radio" name="razes" class="razes" id="orc" disabled>
+                <!--<input type="checkbox" class="razes" value="orc" id="orc">-->
                 <label class="razesLabels" for="orc" id="orcLabel"></label>
-                <input type="checkbox" class="razes" value="dwarf" id="dwarf">
+                <input type="radio" name="razes" class="razes" id="dwarf" disabled>
+                <!--<input type="checkbox" class="razes" value="dwarf" id="dwarf">-->
                 <label class="razesLabels" for="dwarf" id="dwarfLabel"></label>
             </form>
             <input type="button" class="continueButton" value="Comfirm Selections" id="continueCharacter1">
         </div>
-        <div>
+        <div id="characterImgRazesContainer">
             <img src="img/noCharacter.png" alt="choose a Raze" id="characterImgRazes">
         </div>
         <div id="razeDescription">
@@ -95,7 +99,7 @@
             </form>
             <input type="button" class="continueButton" value="Comfirm Selections" id="continueCharacter2">
         </div>
-        <div>
+        <div id="characterImgClassesContainer">
             <img src="" alt="choose a Class" id="characterImgClasses">
         </div>
         <div id="classDescription">
@@ -168,9 +172,9 @@
                 </ul>
                 <input type="button" class="continueButton" value="Continue" id="continueProfile">
             </div>
-            <div id="profileImgSection">
+            <div id="profileImgContainer">
                 <h3 id="selectedCharacterName">Character Name</h3>
-                <img src="img/dualRaze/humanelffemalequeenArachne.png" alt="Your Character" id="profileImg">
+                <img src="" alt="Your Character" id="profileImg">
             </div>
             <div id="characterSkillsInfo">
                 <h4 id="selectedClassName">Raze Name</h4>
