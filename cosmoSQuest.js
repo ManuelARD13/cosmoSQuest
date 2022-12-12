@@ -1,3 +1,5 @@
+/*Testing branches*/
+
 /*Constructores*/
 class Character {
     /*Inicializamos todas las propiedades desde el principio para tener guia de variables por asignar en el proceso de creacion de personaje*/
