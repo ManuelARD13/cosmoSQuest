@@ -149,6 +149,8 @@ const razes = Array.from(document.getElementsByClassName("razes"))
 const playlist = []
 const mainMenuAudio = new Audio("audio/mainMenu.mp3")
 playlist.push(mainMenuAudio)
+const taverAudio = new Audio("audio/tavern.mp3")
+playlist.push(taverAudio)
 const humansAudio = new Audio("audio/human.mp3")
 playlist.push(humansAudio)
 const elfsAudio = new Audio("audio/elf.mp3")
@@ -357,20 +359,12 @@ const dwarfAvailableClasses = {
 const dwarf = new Razes ("dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="img/fareastIronFederation.png", "img/dwarffemale.png", "img/dwarfmale.png", dwarfAvailableClasses, true)
 playableRazes.push(dwarf)
 
-
-function createClassesImg() {
-    let createImgs = document.createElement("script")
-    createImgs.src = "mediaResources.js"
-    trial.appendChild(createImgs)
-    initImgs()
-}
-
 function init(){
     
     continueButton.forEach((button) => {
         if(button.id == "newGame"){
             button.addEventListener("click", generateNewCharacter)
-            button.addEventListener("click", createClassesImg)
+            button.addEventListener("click", () => setRazeBackground())
         } else if(button.id == "continueCharacter1") {
             button.addEventListener("click", () => setRazeBackground(character.raze))
         } else if(button.id == "startScreenButton") {
@@ -465,6 +459,13 @@ function setRazeBackground(selectedRaze) {
         song.pause()
         song.currentTime = 0
     })
+
+    if(!selectedRaze){
+        document.body.style.backgroundImage = `url(https://i.imgur.com/svtJbZs.jpg)`
+        taverAudio.play()
+        return false
+    }
+    
     playableRazes.forEach((raze) => {
         if(raze.razeName == selectedRaze.razeName) {
             document.body.style.backgroundImage = `url(${raze.razeBKImg})`
@@ -511,8 +512,6 @@ function showRazes(e) {
                 character.raze = razeSelection(dualRazeSelection)
                 character.setImg()
                 characterImgRazes.src = character.characterImgSrc
-                /*genderAndRazeSelection = targetedImg.id + "" + razes[i].id + "" + character.gender
-                selectedRaze = targetedImg.id + razes[i].id*/
                 return false
             } }
 
@@ -522,16 +521,12 @@ function showRazes(e) {
                 razeSelection(razes[i])
                 character.setImg()
                 characterImgRazes.src = character.characterImgSrc
-                /*genderAndRazeSelection = razes[i].id + "" + character.gender
-                selectedRaze = razes[i].id*/
                 return false
             }
             if (targetedImg.checked) {
                 razeSelection(targetedImg)
                 character.setImg()
                 characterImgRazes.src = character.characterImgSrc
-                /*genderAndRazeSelection = targetedImg.id + "" + character.gender
-                selectedRaze = targetedImg.id*/
                 return false
             } 
             characterImgRazes.src = character.characterImgSrc

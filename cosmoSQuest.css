@@ -8,12 +8,13 @@ body {
     color: white;
     background-color:black;
     background-size: cover;
+    overflow: hidden;
 }
 
 section {
     width: 100vw;
     max-width: 1366px;
-    height: 80vh;
+    height: 90vh;
 }
 
 #mainMenuSubtitle {
@@ -41,6 +42,7 @@ p {
     justify-content: center;
     width: 100vw;
     height: 10vh;
+    background-color: transparent;
 } 
 
 #startScreen {
@@ -135,11 +137,11 @@ p {
 #createCharacter1{
     display: none;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
-    padding: 46px 0px 20px 0px;
+    /*padding: 46px 0px 20px 0px;*/
     gap: 44px;
     background: rgb(0, 0, 0, 0.2);
-    background-image: url("https://i.imgur.com/svtJbZs.jpg");
     background-size: cover;
 }
 
@@ -241,8 +243,9 @@ p {
 #createCharacter2 {
     display: none;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
-    padding: 46px 0px 20px 0px;
+    /*padding: 46px 0px 20px 0px;*/
     gap: 44px;
 }
 
@@ -262,8 +265,9 @@ p {
 #characterProfile{
     display: none;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
-    padding: 46px 0px 20px 0px;
+    /*padding: 46px 0px 20px 0px;*/
     gap: 44px;
     background: rgb(0, 0, 0, 0.55);
 }
