@@ -139,7 +139,6 @@ p {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    /*padding: 46px 0px 20px 0px;*/
     gap: 44px;
     background: rgb(0, 0, 0, 0.2);
     background-size: cover;
@@ -207,6 +206,8 @@ p {
 #characterImgRazesContainer, #characterImgClassesContainer, #profileImgContainer{
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 27.01vw;
 }
 
@@ -251,14 +252,26 @@ p {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    /*padding: 46px 0px 20px 0px;*/
     gap: 44px;
 }
 
 #createCharacter3 {
-    background-color: black;
     display: none;
+    justify-content: center;
+    align-items: center;
 }
+
+#diceRollTableContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25.25vw;
+    height: 62.74vh;
+    padding: 30px;
+    background: rgb(0, 0, 0, 0.4);
+    border: 1px solid #d9952e;
+}
+
 
 .reRollButtons {
     display: none;
@@ -266,6 +279,8 @@ p {
 
 #reRollMessage {
     display: none;
+    width: 25.25vw;
+    height: 5.42vh;
 }
 
 #characterProfile{
@@ -273,7 +288,6 @@ p {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    /*padding: 46px 0px 20px 0px;*/
     gap: 44px;
     background: rgb(0, 0, 0, 0.55);
 }

@@ -108,6 +108,7 @@ const returnButton = Array.from(document.getElementsByClassName("returnButton"))
 const continueButton = Array.from(document.getElementsByClassName("continueButton"))
 const gameSections = Array.from(document.getElementsByTagName("section"))
 const headerTitle = document.getElementById("headerTitle")
+const startScreen = document.getElementById("startScreen")
 const branding = document.getElementById("branding")
 const mainMenu = document.getElementById("mainMenu")
     let character
@@ -359,13 +360,10 @@ const dwarfAvailableClasses = {
 const dwarf = new Razes ("dwarf", [], "lorem ipsum", dwarfsAudio, new Image().src="img/fareastIronFederation.png", "img/dwarffemale.png", "img/dwarfmale.png", dwarfAvailableClasses, true)
 playableRazes.push(dwarf)
 
-function anaibleRazeSelection() {
-    razes.forEach((raze) => {
-        raze.disabled = false
-    })
-}
+
 
 function init(){
+    hideSections(startScreen)
     
     continueButton.forEach((button) => {
         if(button.id == "newGame"){
@@ -497,11 +495,17 @@ function applyGenderSelection(){
             character.gender = genderSelection[i].value
         }
     }
-    anaibleRazeSelection()
+    enableRazeSelection()
 }
 
 function setCharacterName() {
     character.name = characterNameInput.value
+}
+
+function enableRazeSelection() {
+    razes.forEach((raze) => {
+        raze.disabled = false
+    })
 }
 
 function showRazes(e) {
@@ -544,11 +548,6 @@ function showRazes(e) {
 
         } 
         
-/*else {
-     targetedImg.checked = false
-}
-} */
-
 function razeSelection(razeLabelChecked){
     playableRazes.forEach((raze) => {
         if(raze.razeName == razeLabelChecked.id){
@@ -559,15 +558,7 @@ function razeSelection(razeLabelChecked){
 
 function showClasses(e) {
     let targetedImg= e.target
-    /*let limit = 0
 
-    playableClasses.forEach((pClass) => {
-        if(pClass.checked){
-            limit++
-        }
-    })*/
-
-    /*if(limit<=1){*/
        for(let i = 0; i < playableClasses.length; i++){ 
         //Iteramos sobre el arreglo "razes" para verificar si "target:checked" y si hay otro elemento ":checked" ademas de "target"
         if (targetedImg.checked && playableClasses[i].checked && targetedImg.id!=playableClasses[i].id){
@@ -602,10 +593,6 @@ function showClasses(e) {
             } 
             characterImgClasses.src = characterImgRazes.src} 
     } 
-      /*else {
-     targetedImg.checked = false
-    } 
-} */
 
 function classSelection(classLabelString){
     playableClasses.forEach((pClass) => {
@@ -649,7 +636,10 @@ function createClassSelectors(characterClass) {
 
 function hideSections(selectedSection){
     gameSections.forEach((section) => {
-        if(selectedSection.id == "branding"){
+        if(selectedSection.id == "startScreen"){
+            section.style.display = "none"
+            selectedSection.style.display = "flex"
+        } else if(selectedSection.id == "branding"){
             section.style.display = "none"
             selectedSection.style.display = "flex"
             setTimeout(() => hideSections(mainMenu), 14000)
@@ -691,7 +681,23 @@ function reRollStatDice(e){
     if(reRolls > 0){
        let stat = e.target.id
         let statScore = document.getElementById(stat + "Score")
-        statScore.innerHTML = statCalculator()
+        let reRollScore = statCalculator()
+        statScore.innerHTML = reRollScore
+
+        if(stat == "CON"){
+            diceRolls.CONScore = reRollScore
+        } else if(stat == "STR"){
+            diceRolls.STRScore = reRollScore
+        } else if(stat == "DEX"){
+            diceRolls.DEXScore = reRollScore 
+        } else if(stat == "INT"){
+            diceRolls.INTScore = reRollScore
+        } else if(stat == "WIS"){
+            diceRolls.WISScore = reRollScore
+        } else if(stat == "CHA"){
+            diceRolls.CHAScore = reRollScore
+        }
+
         reRolls--
         updateReRolls() 
     } 

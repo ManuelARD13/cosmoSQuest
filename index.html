@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pathfinders: Cosmo's Quest</title>
     <link rel="stylesheet" href="cosmoSQuest.css">
+    <script src="mediaResources.js"></script>
 </head>
 <body>
     <header id="headerTitle">
         <h2>Create Your Character</h2>
     </header>
+    <section>
+        <p>Loading...</p>
+    </section>
     <section id="startScreen">
         <img src="img/diceGoblin.png" alt="">
         <input type="button" class="continueButton" value="START DEMO APP TRIAL" id="startScreenButton">
@@ -109,11 +113,11 @@
         </div>
     </section>
     <section id="createCharacter3">
-        <div>
+        <div id="diceRollTableContainer">
             <p>createCharacter3</p>
             <p id="reRollMessage">Great! Yet you have <span id="reRollDisplay">3</span> chances to re-roll <br>
                 one of the stat's score you have get. Good Luck!<br></p>
-            <h4>Roll your dices<h4></h4>
+            <h4>Roll your dices</h4>
             <table id="statsTable">    
                 <tr>
                     <th>Stats</th>
@@ -200,7 +204,6 @@
             <input type="button" class="returnButton returnMainMenu" value="Return" id="greetingsButton">
         </div>
     </section>
-    <script src="mediaResources.js"></script>
     <script src="cosmoSQuest.js"></script>
 </body>
 </html>
