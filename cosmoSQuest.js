@@ -125,6 +125,7 @@ const createCharacter2 = document.getElementById("createCharacter2")
 const createCharacter3 = document.getElementById("createCharacter3")
     const buttonDice = document.getElementById("buttonDice")
     const reRollsDisplay = document.getElementById("reRollDisplay")
+    const del = document.getElementsByTagName("del")
     const reRollMessage = document.getElementById("reRollMessage")
     const statsScores = Array.from(document.getElementsByClassName("statsScores"))
     const reRollButtons = Array.from(document.getElementsByClassName("reRollButtons"))
@@ -675,6 +676,7 @@ function showReRollButtons() {
         button.style.display = "flex"
     })
     reRollMessage.style.display = "inline-block"
+    del.style.display = "none"
 }
 
 function reRollStatDice(e){

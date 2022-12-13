@@ -54,7 +54,7 @@ p {
     justify-content: center;
 }
 
-#startScreenButton {
+input[type="button"] {
     background: #eb0707;
     background-image: -webkit-linear-gradient(top, #eb0707, #700A02);
     background-image: -moz-linear-gradient(top, #eb0707, #700A02);
@@ -64,18 +64,18 @@ p {
     -webkit-border-radius: 15;
     -moz-border-radius: 15;
     border-radius: 15px;
-    -webkit-box-shadow: 7px 7px 14px #666666;
-    -moz-box-shadow: 7px 7px 14px #666666;
-    box-shadow: 7px 7px 14px #666666;
+    -webkit-box-shadow: 7px 7px 7px #070707;
+    -moz-box-shadow: 7px 7px 7px #070707;
+    box-shadow: 7px 7px 7px #070707;
     font-family: 'MedievalSharp', cursive;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 16px;
     padding: 10px 20px 10px 20px;
     border: solid #d9952e 2px;
     text-decoration: none;
 }
 
-#startScreenButton:hover {
+input[type="button"]:hover {
     background: #050505;
     text-decoration: none;
 }
